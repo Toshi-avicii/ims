@@ -11,5 +11,5 @@ app.use(express.json());
 
 const port = env.PORT || 6000;
 app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+    console.log(`Git Server is running on port ${port}`);
 });
