@@ -1,13 +1,15 @@
 const express = require('express');
 const counselorsRoute = express.Router();
-const { getCounselors, addCounselor, deleteCounselors } = require('../controllers/counselorsController');
+const { getCounselors, addCounselor, deleteCounselors, getOneCounselor, updateCounselor } = require('../controllers/counselorsController');
 const { adminMiddleware } = require('../middleWares/userMiddleware');
 const { counselorValidations } = require('../validations/counselorValidations');
 
 
-counselorsRoute.get("/", adminMiddleware ,getCounselors);
-counselorsRoute.post("/", adminMiddleware, counselorValidations, addCounselor);
-counselorsRoute.delete("/", adminMiddleware ,deleteCounselors);
+counselorsRoute.get("/", adminMiddleware ,getCounselors)
+.post("/", adminMiddleware, counselorValidations, addCounselor)
+.delete("/", adminMiddleware ,deleteCounselors);
 
+counselorsRoute.get("/:counselorId", adminMiddleware, getOneCounselor)
+.patch("/:counselorId", adminMiddleware, updateCounselor)
 
 module.exports = counselorsRoute;

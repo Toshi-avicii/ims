@@ -3,8 +3,7 @@ const mongoose = require('mongoose');
 const userSchema = mongoose.Schema({
     name: {
         type: String,
-        require: true,
-        minlength: 3,
+        require: true
     },
     email: {
         type: String,
@@ -20,7 +19,6 @@ const userSchema = mongoose.Schema({
         type: String,
         require: [true, "role must be required"]
     }
-    
 });
 
 const userModel = mongoose.model("User", userSchema);

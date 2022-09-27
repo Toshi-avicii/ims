@@ -8,7 +8,7 @@ const login =  async(req, res) => {
     const errors = validationResult(req);
     if(errors.isEmpty()) {
         try {
-            const user = await userModel.findOne({ email: email});
+            const user = await userModel.findOne({ email });
             if(user) {
                 const result = await bcrypt.compare(password, user.password);
                 if(result) {
