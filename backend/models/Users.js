@@ -1,14 +1,19 @@
 const mongoose = require('mongoose');
 
 const userSchema = mongoose.Schema({
+    name: {
+        type: String,
+        require: true,
+        minlength: 3,
+    },
     email: {
         type: String,
-        require: [true],
+        require: true,
         unique: [true, "Email is already taken"]
     },
     password: {
         type: String,
-        require: [true],
+        require: true,
         minlength: [6, "password must be equal or greater than 6 characters"]
     },
     role: {
