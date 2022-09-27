@@ -48,7 +48,29 @@ const  addCounselor = async(req, res) => {
     }
 }
 
+const deleteCounselors = async(req, res) => {
+    try {
+        const deletedUsers = await userModel.deleteMany({ role: 'counselor' });
+        if(deletedUsers) {
+            res.status(200).json({
+                msg: 'users deleted successfully',
+                data: deletedUsers
+            })
+        } else {
+            res.status(401).json({
+                msg: 'No users found'
+            })
+        }
+
+    } catch(err) {
+        res.status(500).json({
+            msg: err.message
+        });
+    }
+}
+
 module.exports = {
     getCounselors,
-    addCounselor
+    addCounselor,
+    deleteCounselors
 }
