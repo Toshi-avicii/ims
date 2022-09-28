@@ -40,7 +40,6 @@ const addCounselor = async (req, res) => {
         });
       }
     } catch (error) {
-      console.log(error.message);
       return res.status(500).json({ msg: "Email already exists" });
     }
   } else {
