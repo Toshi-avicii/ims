@@ -1,5 +1,7 @@
+const userModel = require('../models/Users');
 const leadModel = require("../models/lead");
 const { validationResult } = require("express-validator");
+const { Types } = require('mongoose');
 
 const getLeads = async(req, res) => {
     try {
@@ -70,9 +72,32 @@ const getLeadById = async(req, res) => {
         });
     }
 }
+
+const getLeadsByCounselor = async(req, res) => {
+    try {
+        const leads = await leadModel.find({ counselor: req.params.counselorId }, '-counselor');
+        const counselor = await userModel.findById({_id: req.params.counselorId}, '-email -role -password');
+        if(leads) {
+            res.status(200).json({
+              msg: `leads made by ${counselor.name || "counselor"}`,
+              data: leads
+            })
+          } else {
+            res.status(401).json({
+              msg: "Counselors not found"
+            })
+          }
+    } catch(err) {
+        res.status(401).json({
+            msg: err.message
+        })
+    }
+}
+  
  
 module.exports = {
     getLeads,
     addLead,
-    getLeadById
-}
+    getLeadById,
+    getLeadsByCounselor,
+};

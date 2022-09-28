@@ -1,6 +1,7 @@
 const userModel = require("../models/Users");
 const { validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
+const leadModel = require("../models/lead");
 
 const getCounselors = async (req, res) => {
   const result = await userModel.find({ role: "counselor" });
