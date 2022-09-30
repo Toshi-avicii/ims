@@ -1,9 +1,0 @@
-const express = require('express');
-const adminRoute = express.Router();
-const { adminMiddleware } = require('../middleWares/userMiddleware');
-const { adminProfile } = require('../controllers/adminControllers');
-
-adminRoute
-.get("/profile", adminMiddleware, adminProfile);
-
-module.exports = adminRoute;

@@ -15,7 +15,7 @@ const getCounselors = async (req, res) => {
 };
 
 const addCounselor = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password } = req.body; 
   const errors = validationResult(req);
 
   if (errors.isEmpty()) {
@@ -37,7 +37,7 @@ const addCounselor = async (req, res) => {
         });
       } else {
         res.status(401).json({
-          msg: "Could not create counselor",
+        msg: "Could not create counselor",
         });
       }
     } catch (error) {

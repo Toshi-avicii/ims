@@ -103,10 +103,11 @@ const getLeadsByCounselor = async (req, res) => {
 const updateOneLead = async (req, res) => {
   let result;
   const _id = req.params.leadId;
-  const title = req.body.title;
-  const name = req.body.name;
-  const status = req.body.status;
-  const description = req.body.description;
+  const { title, name, status, description } = req.body;
+  // const title = req.body.title;
+  // const name = req.body.name;
+  // const status = req.body.status;
+  // const description = req.body.description;
 
   try {
     if (title) {
