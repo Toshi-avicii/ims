@@ -23,6 +23,21 @@ const leadSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    course: {
+        type: String,
+        lowercase: true,
+        enum: ["it expert" , "ms office", "dca"],
+        required: true
+    },
+    reference: {
+        type: Object,
+        name: {
+            type: String,
+        },
+        phoneNo: {
+            type: String
+        }
+    },
     date: {
         type: Date,
         default: new Date()

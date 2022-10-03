@@ -13,10 +13,10 @@ connect();
 app.use(cors());
 app.use(express.json());
 
+app.use("/api/admin", adminRoute);
 app.use("/api", authRoute);
 app.use("/api/counselors", counselorsRoute);
 app.use("/api/leads", leadsRoute);
-app.use("/api/admin", adminRoute);
 
 const port = env.PORT || 6000;
 app.listen(port, () => {

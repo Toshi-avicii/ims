@@ -112,10 +112,14 @@ const updateCounselor = async (req, res) => {
       );
     }
 
-    res.status(201).json({
-      msg: "Counselor updated successfully",
-      data: result,
-    });
+    if(result) {
+      res.status(201).json({
+        msg: "Counselor updated successfully",
+        data: result,
+      });
+    } else {
+      throw new Error("server Errord");
+    }
   } catch (err) {
     res.status(401).json({
       msg: "Some error occurred",

@@ -8,7 +8,7 @@ const getLeads = async (req, res) => {
 
     if (allLeads.length > 0) {
       res.status(200).json({
-        msg: "Leads Found",
+        msg: `${allLeads.length} Leads Found`,
         data: allLeads,
       });
     } else {
@@ -24,7 +24,7 @@ const getLeads = async (req, res) => {
 };
 
 const addLead = async (req, res) => {
-  const { leadTitle, name, leadEmail, leadPhone, leadDesc, counselor } =
+  const { leadTitle, name, leadEmail, leadPhone, leadDesc, counselor, courseName, reference } =
     req.body;
   const errors = validationResult(req);
 
@@ -36,6 +36,8 @@ const addLead = async (req, res) => {
         email: leadEmail,
         phone: leadPhone,
         description: leadDesc,
+        course: courseName,
+        reference,
         counselor,
       });
 
@@ -50,7 +52,14 @@ const addLead = async (req, res) => {
         });
       }
     } catch (err) {
-      return res.status(500).json({ msg: "Lead already exists" });
+      if(err.message.includes('phone')) {
+        return res.status(500).json({ msg: "Phone no. already exists" });
+      } else if(err.message.includes('email')) {
+        return res.status(500).json({ msg: "Email already exists" });
+      } else {
+        return res.status(500).json({ msg: err.message });
+      }
+
     }
   } else {
     res.status(401).json({ errors: errors.array() });
@@ -73,19 +82,22 @@ const getLeadById = async (req, res) => {
   }
 };
 
-const getLeadsByCounselor = async (req, res) => {
+const getLeadsByCounselorId = async (req, res) => {
   try {
     const leads = await leadModel.find(
       { counselor: req.params.counselorId },
       "-counselor"
     );
-    const counselor = await userModel.findById(
+
+    const counselor = await userModel.findOne(
       { _id: req.params.counselorId },
       "-email -role -password"
     );
+
+    const counselorName = (counselor && counselor.name) || "counselor";
     if (leads) {
       res.status(200).json({
-        msg: `leads made by ${counselor.name || "counselor"}`,
+        msg: `${leads.length} leads found by ${counselorName}`,
         data: leads,
       });
     } else {
@@ -104,10 +116,6 @@ const updateOneLead = async (req, res) => {
   let result;
   const _id = req.params.leadId;
   const { title, name, status, description } = req.body;
-  // const title = req.body.title;
-  // const name = req.body.name;
-  // const status = req.body.status;
-  // const description = req.body.description;
 
   try {
     if (title) {
@@ -142,10 +150,14 @@ const updateOneLead = async (req, res) => {
       );
     }
 
-    res.status(200).json({
-      msg: "Lead updated successfully.",
-      data: result,
-    });
+    if(result) {
+      res.status(200).json({
+        msg: "Lead updated successfully.",
+        data: result,
+      });
+    } else {
+      throw new Error("server Error");
+    }
   } catch (err) {
     res.status(401).json({
       msg: err.message,
@@ -176,7 +188,7 @@ module.exports = {
   getLeads,
   addLead,
   getLeadById,
-  getLeadsByCounselor,
+  getLeadsByCounselorId,
   updateOneLead,
   deleteOneLead,
 };
