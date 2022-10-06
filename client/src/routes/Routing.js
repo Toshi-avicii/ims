@@ -8,9 +8,7 @@ function Routing() {
   return (
     <BrowserRouter>
         <Routes>
-            <Route path="auth">
-                <Route path="login" element={<PublicRoute><AdminLogin /></PublicRoute>} />
-            </Route>
+            <Route path="/" element={<PublicRoute><AdminLogin /></PublicRoute>} />
             <Route path='dashboard'>
               <Route path='products' element={<PrivateRoute><Products /></PrivateRoute>} />
             </Route>

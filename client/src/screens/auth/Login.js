@@ -8,7 +8,8 @@ import { setAdminToken } from '../../store/reducers/authReducer';
 function AdminLogin() {
   const [loginState, setLoginState] = useState({
     email: '',
-    password: ''
+    password: '',
+    role: 'admin'
   });
 
   const dispatch = useDispatch();
@@ -18,9 +19,13 @@ function AdminLogin() {
     setLoginState({...loginState, [e.target.name]: e.target.value })
   }
 
+  const changeRole = (e) => {
+    setLoginState({ ...loginState, role: e.target.value });
+  }
+
   const [login, response] = useAuthLoginMutation();
   const errors = response?.error?.data.errors ? response?.error?.data.errors : []; 
-  console.log('my response', response);
+  // console.log('my response', response);
   
   const adminLoginFunction = e => {
     e.preventDefault();
@@ -68,6 +73,18 @@ function AdminLogin() {
             changeEvent={handleInputs} 
             inputValue={loginState.password}
           />
+          <div className="mt-4">
+            <label htmlFor="role">Choose a Role</label>
+            <select 
+              id="role" 
+              className="block w-full p-4 bg-slate-50 outline-none mt-4 rounded-lg"
+              value={loginState.role}
+              onChange={changeRole}
+            >
+              <option value="admin">Admin</option>
+              <option value="counselor">Counselor</option>
+            </select>
+          </div>
           <div className="mt-8">
               <input 
                 type="submit" 
