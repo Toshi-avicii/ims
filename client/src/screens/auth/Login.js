@@ -37,7 +37,7 @@ function AdminLogin() {
       localStorage.setItem('admin-token', response?.data?.token);
       dispatch(setAdminToken(response?.data?.token));
       // redirect to this route
-      navigate('/dashboard/products');
+      navigate('/dashboard');
     }
   }, [response.isSuccess, dispatch, navigate, response?.data?.token])
 

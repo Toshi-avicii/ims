@@ -4,7 +4,6 @@ import { useState } from 'react';
 
 function Wrapper() {
   const [sideBar, setSidebar] = useState('-left-64');
-
   const openSidebar = () => {
     setSidebar('-left-0');
   }
@@ -17,7 +16,7 @@ function Wrapper() {
     <>
     <Sidebar side={sideBar} closeSidebar={closeSidebar} />
     <AdminNav openSidebar={openSidebar} />
-    <section className="ml-0 sm:ml-64 bg-slate-200 min-h-screen pt-28 px-4">
+    <section className="ml-0 sm:ml-64 bg-slate-200 min-h-screen px-4 pt-5">
       <div className="p-4 text-justify bg-white rounded-md">
         <h1 className="text-2xl font-thin mb-4">Sample Content</h1>
         <p>

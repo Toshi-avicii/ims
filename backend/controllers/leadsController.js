@@ -1,6 +1,7 @@
 const userModel = require("../models/Users");
 const leadModel = require("../models/lead");
 const { validationResult } = require("express-validator");
+const sendMail = require('../config/sendMail');
 
 const getLeads = async (req, res) => {
   try {
@@ -42,6 +43,7 @@ const addLead = async (req, res) => {
       });
 
       if (createdLead) {
+        sendMail("created", req.tokenInfo ,createdLead);
         res.status(201).json({
           msg: "lead created successfully",
           leadDetails: createdLead,

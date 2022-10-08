@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 
 function PublicRoute({ children }) {
     const adminToken = useSelector(state => state.authReducer.adminToken);
-    return adminToken ? <Navigate to="/dashboard/products" /> : children;
+    return adminToken ? <Navigate to="/dashboard" /> : children;
 }
 
 export default PublicRoute
