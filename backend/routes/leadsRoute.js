@@ -6,7 +6,7 @@ const authenticateLogin = require('../middleWares/authenticateLogin');
 
 leadsRoute
 .post("/", authenticateLogin ,addLead)
-.get("/", adminMiddleware, getLeads)
+.get("/", authenticateLogin, getLeads)
 .get("/:leadId", authenticateLogin ,getLeadById)
 .patch("/:leadId", authenticateLogin ,updateOneLead)
 .delete("/:leadId", authenticateLogin ,deleteOneLead)
