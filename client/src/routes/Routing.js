@@ -9,9 +9,8 @@ function Routing() {
     <BrowserRouter>
         <Routes>
             <Route path="/" element={<PublicRoute><AdminLogin /></PublicRoute>} />
-            <Route path='dashboard'>
-              <Route path='products' element={<PrivateRoute><Products /></PrivateRoute>} />
-            </Route>
+            <Route path='dashboard' element={<PrivateRoute><Products /></PrivateRoute>} />
+            <Route path='*' element={<div><p>Page not found</p></div>} />
         </Routes>
     </BrowserRouter>
   )

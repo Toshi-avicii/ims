@@ -1,35 +1,86 @@
-import React from 'react'
-// import Logo from '../../public/logo192.png'
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 function Sidebar({ side, closeSidebar }) {
+  const [open, setOpen] = useState(false);
+  const [openCounselor, setOpenCounselor] = useState(false);
 
-  
   return (
-    <div className={`fixed top-0 ${side} sm:left-0 w-64 h-screen bg-slate-100 p-6 font-primary z-10 transition-all`}>
+    <>
+    <div className={`fixed top-0 ${side} sm:left-0 w-64 h-screen bg-slate-100 font-primary z-10 transition-all`}>
         <i className="bi bi-x-lg absolute top-4 right-4 font-semibold sm:hidden block cursor-pointer text-lg" onClick={closeSidebar}></i>
         <div className='p-4 flex justify-center items-center flex-col'>
             <img src="/logo192.png" alt="Company Logo" className='block w-16 mb-2' />
             <p>React Dashboard</p>
         </div>
 
-        <ul>
+        <ul className='border-b border-b-gray-300 p-6'>
             <li className='p-3 text-md font-medium cursor-pointer bg-white rounded-md mb-5'>
-                <i className="bi bi-card-list mr-3 px-2 py-1 bg-primary text-xl text-white rounded"></i>
-                <Link to="/dashboard/products">Products</Link>
+                <i className="bi bi-collection mr-3 px-2 py-1 bg-primary text-xl text-white rounded"></i>
+                <Link to="/dashboard">Dashboard</Link>
             </li>
 
-            <li className='p-3 text-md font-medium cursor-pointer bg-white rounded-md mb-5'>
-                <i className="bi bi-bag-check-fill mr-3 px-2 py-1 bg-primary text-xl text-white rounded"></i>
-                <Link to="/dashboard/products">Orders</Link>
+            <li className={`p-3 text-md font-medium cursor-pointer bg-white ${open ? 'rounded-t-md' : 'rounded-md'} flex items-center`} onClick={() => setOpen(!open)}>
+                <i className="bi bi-person-lines-fill mr-3 px-2 py-1 bg-primary text-xl text-white rounded"></i>
+                <p className='inline'>Leads</p>
+                <i className={`bi ${open ? `bi-caret-up-fill` :`bi-caret-down-fill`} ml-auto mr-3`}></i>
             </li>
 
-            <li className='p-3 text-md font-medium cursor-pointer bg-white rounded-md mb-5'>
+            {open && 
+                <div className='w-full bg-white items-center p-3 mb-5 rounded-b-md'>
+                    <ul>
+                        <li className='flex mb-3 items-center font-medium'>
+                            <i className="bi bi-layers-fill px-2 py-1 bg-primary text-xl text-white rounded mr-3"></i>
+                            <Link to="/dashboard/leads">Show All Leads</Link>
+                        </li>
+
+                        <li className='flex items-center font-medium'>
+                            <i className="bi bi-plus px-2 py-1 bg-primary text-xl text-white rounded mr-3"></i>
+                            <p>Create Lead</p>
+                        </li>
+                    </ul>
+                </div>
+
+            }
+                
+            <li className={`p-3 text-md font-medium cursor-pointer bg-white rounded-md ${open ? '' : 'mt-4'} ${open ? 'rounded-t-md' : 'rounded-md'} flex items-center`} onClick={() => setOpenCounselor(!openCounselor)}>
                 <i className="bi bi-people-fill mr-3 px-2 py-1 bg-primary text-xl text-white rounded"></i>
-                <Link to="/dashboard/products">Customers</Link>
+                <p className='font-medium inline'>Counselors</p>
+                <i className={`bi ${openCounselor ? `bi-caret-up-fill` : `bi-caret-down-fill`} ml-auto mr-3`}></i>
+            </li>
+
+            {openCounselor && 
+                <div className='w-full bg-white items-center p-3 mb-5 rounded-b-md'>
+                    <ul>
+                        <li className='flex mb-3 items-center font-medium'>
+                            <i className="bi bi-layers-fill px-2 py-1 bg-primary text-xl text-white rounded mr-3"></i>
+                            <Link to="/dashboard/counselors" className='text-sm'>Show All Counselors</Link>
+                        </li>
+
+                        <li className='flex items-center font-medium'>
+                            <i className="bi bi-person-plus-fill px-2 py-1 bg-primary text-xl text-white rounded mr-3"></i>
+                            <Link to="/dashboard/counselors" className='text-sm'>Create a Counselor</Link>
+                        </li>
+                    </ul>
+                </div>
+            }
+        </ul>
+
+        <p className='px-8 font-medium py-2 text-xs uppercase text-gray-500'>Account</p>
+
+        <ul className='px-6 py-2'>
+            <li className='p-3 text-md font-medium cursor-pointer bg-white rounded-md mb-5'>
+                <i className="bi bi-person-square mr-3 px-2 py-1 bg-primary text-xl text-white rounded"></i>
+                <Link to="/profile">Profile</Link>
+            </li>
+
+            <li className='p-3 text-md font-medium cursor-pointer bg-white rounded-md mb-5'>
+                <i className="bi bi-box-arrow-left mr-3 px-2 py-1 bg-primary text-xl text-white rounded"></i>
+                <Link to="/profile">Logout</Link>
             </li>
         </ul>
     </div>
+    </>
   )
 }
 

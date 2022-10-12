@@ -11,7 +11,7 @@ function TextInput({ labelText, inputType, inputName, inputPlaceholder, changeEv
             value={inputValue} 
         />
     </div>
-  )
+  ) 
 }
 
 export default TextInput
