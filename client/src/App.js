@@ -1,7 +1,7 @@
 import Routing from './routes/Routing';
 
 function App() {
-  return (
+  return (    
     <>
     <Routing />
     </>
@@ -9,4 +9,3 @@ function App() {
 }
 
 export default App;
-
