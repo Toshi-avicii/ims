@@ -42,7 +42,6 @@ const updateAdmin = async(req, res) => {
 
     const foundedAdmin = await userModel.findOne({ _id: tokenPayload.id });
     const correctPassword = await bcrypt.compare(password, foundedAdmin.password);
-    console.log(correctPassword);
 
     if(name && correctPassword) {
       result = await userModel.findOneAndUpdate(
