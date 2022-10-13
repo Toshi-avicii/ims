@@ -7,7 +7,7 @@ function Sidebar({ side, closeSidebar }) {
 
   return (
     <>
-    <div className={`fixed top-0 ${side} sm:left-0 w-64 h-screen bg-slate-100 font-primary z-10 transition-all`}>
+    <div className={`fixed overflow-y-auto top-0 ${side} sm:left-0 w-64 h-screen bg-slate-100 font-primary z-10 transition-all`}>
         <i className="bi bi-x-lg absolute top-4 right-4 font-semibold sm:hidden block cursor-pointer text-lg" onClick={closeSidebar}></i>
         <div className='p-4 flex justify-center items-center flex-col'>
             <img src="/logo192.png" alt="Company Logo" className='block w-16 mb-2' />

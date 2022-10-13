@@ -4,7 +4,7 @@ const adminStorage = localStorage.getItem('admin-token');
 
 function verifyToken() {
     if(adminStorage) {
-        const decodeToken = jwtDecode(adminStorage);
+        const decodeToken = jwtDecode(adminStorage); 
         const expiresIn = new Date(decodeToken.exp * 1000);
         if(new Date() > expiresIn) {
             localStorage.removeItem('admin-token');
@@ -27,7 +27,7 @@ const authReducer = createSlice({
             state.adminToken = action.payload
         },
 
-        logout: (state, action) => {
+        logout: (state) => {
             localStorage.removeItem('admin-token');
             state.adminToken = null;
         }

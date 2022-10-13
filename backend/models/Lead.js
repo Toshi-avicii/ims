@@ -52,6 +52,8 @@ const leadSchema = mongoose.Schema({
         required: true,
         ref: 'User'
     }
+}, {
+    timestamps: true
 });
 
 const leadModel = mongoose.model("Lead", leadSchema);
