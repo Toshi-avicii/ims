@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { setAdminToken } from '../../store/reducers/authReducer';
 
 function AdminLogin() {
+  
   const [loginState, setLoginState] = useState({
     email: '',
     password: '',
@@ -23,6 +24,7 @@ function AdminLogin() {
     setLoginState({ ...loginState, role: e.target.value });
   }
 
+  // const [login, response] = useAuthLoginMutation();
   const [login, response] = useAuthLoginMutation();
   const errors = response?.error?.data.errors ? response?.error?.data.errors : []; 
   // console.log('my response', response);
@@ -35,7 +37,7 @@ function AdminLogin() {
   useEffect(() => {
     if(response.isSuccess) {
       localStorage.setItem('admin-token', response?.data?.token);
-      dispatch(setAdminToken(response?.data?.token));
+      dispatch(setAdminToken(response?.data?.token));   
       // redirect to this route
       navigate('/dashboard');
     }
@@ -64,7 +66,8 @@ function AdminLogin() {
             inputPlaceholder="johndoe@gmail.com" 
             changeEvent={handleInputs}
             inputValue={loginState.email}
-          />
+
+/>
           <TextInput 
             labelText="Password" 
             inputType="password"

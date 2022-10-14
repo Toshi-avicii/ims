@@ -35,4 +35,4 @@ const authReducer = createSlice({
 });
 
 export const { setAdminToken, logout } = authReducer.actions; 
-export default authReducer.reducer;
+    export default authReducer.reducer;
