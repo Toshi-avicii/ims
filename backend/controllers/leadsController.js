@@ -25,10 +25,9 @@ const getLeads = async (req, res) => {
 };
 
 const addLead = async (req, res) => {
-  const { leadTitle, name, leadEmail, leadPhone, leadDesc, counselor, courseName, reference } =
-    req.body;
+  const { leadTitle, name, leadEmail, leadPhone, leadDesc, courseName, reference } =
+  req.body;
   const errors = validationResult(req);
-
   if (errors.isEmpty()) {
     try {
       const createdLead = await leadModel.create({
@@ -39,7 +38,7 @@ const addLead = async (req, res) => {
         description: leadDesc,
         course: courseName,
         reference,
-        counselor,
+        counselor: req.tokenInfo.id,
       });
 
       if (createdLead) {
