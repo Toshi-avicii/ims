@@ -2,6 +2,7 @@ import AdminNav from "../../components/AdminNav";
 import Sidebar from "../../components/Sidebar";
 import { useState } from 'react';
 import InfoSection from "./InfoSection";
+import ChartSection from "./ChartSection";
 
 function Wrapper() {
   const [sideBar, setSidebar] = useState('-left-64');
@@ -20,6 +21,7 @@ function Wrapper() {
       <section className="ml-0 sm:ml-64 bg-slate-200 min-h-screen pt-28 px-4">
         <div className="text-justify rounded-md">
           <InfoSection />
+          <ChartSection />
         </div>
       </section>
   </div>
