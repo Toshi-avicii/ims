@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import BarChart from '../../components/Charts/BarChart';
 import { useSelector } from 'react-redux';
 import LineChart from '../../components/Charts/LineChart';
-import { Doughnut } from 'react-chartjs-2';
 
 function ChartSection() {
 

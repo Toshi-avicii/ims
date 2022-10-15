@@ -37,33 +37,22 @@ const InfoSection = () => {
         return (leadDate === today) && (leadMonth === currentMonth) && (leadYear === currentYear);
       });
 
+      const leadDates = data.data.filter((item) => {
+        let leadDate = new Date(item.date);
+        let leadMonth = leadDate.getMonth();
+        const currentMonth = new Date().getMonth();
+
+        return leadMonth === currentMonth;
+      });
+
       dispatch(fetchLeadsData({ 
-        leadsCount: data.data.length,
+        leadsCount: leadDates.length,
         pendingLeads:  pendingLeadsCount.length,
         newLeads: leadsToday.length
       }));
     }
 
   }, [dispatch, data, isFetching, response]);
-
-  // const [leads, setLeads] = useState([]);
-
-  // useEffect(() => {
-  //   if(!isFetching) {
-  //     const dataArr = data.data;
-  //     const leadDates = dataArr.filter((item) => {
-  //       let leadDate = new Date(item.date);
-  //       let leadMonth = leadDate.getMonth();
-  //       // let newDate = new Date('10-10-2022');
-  //       // console.log(newDate);
-  //       const currentMonth = new Date().getMonth();
-
-  //       return leadMonth === currentMonth;
-  //     });
-
-  //     setLeads(leadDates);
-  //   }
-  // }, [isFetching, data]);
 
   return (
     <div className="lg:flex lg:justify-between">
