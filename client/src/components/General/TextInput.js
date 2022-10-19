@@ -1,6 +1,6 @@
-function TextInput({ labelText, inputType, inputName, inputPlaceholder, changeEvent, inputValue }) {
+function TextInput({ labelText, inputType, inputName, inputPlaceholder, changeEvent, inputValue, width }) {
   return (
-    <div className="mb-4">
+    <div className={`mb-4 ${width && width}`}>
         <label className="block mb-4">{labelText}</label>
         <input 
             type={inputType} 

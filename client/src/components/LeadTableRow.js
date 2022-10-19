@@ -110,6 +110,7 @@ function LeadTableRow({ item, index, day, year, month, hour, minute, dayNum }) {
                 status={item.status}
                 title={item.title}
                 desc={item.description}
+                id={item._id}
                 closeModal={closeModal}
             />
         }

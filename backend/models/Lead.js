@@ -45,7 +45,8 @@ const leadSchema = mongoose.Schema({
     status: {
         type: String,
         required: true,
-        default: "Pending"
+        default: "Pending",
+        enum: ["Pending", "Resolved", "Rejected"]
     },
     counselor: {
         type: mongoose.Schema.Types.ObjectId,

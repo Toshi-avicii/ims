@@ -1,7 +1,6 @@
 import LeadTableRow from './LeadTableRow';
 
 function LeadsTable({ data }) {
-
   return (
     <div className='bg-slate-100 shadow-md rounded-md overflow-x-scroll'>
         <table>

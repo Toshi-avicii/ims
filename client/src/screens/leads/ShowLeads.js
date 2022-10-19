@@ -1,13 +1,24 @@
 import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import AdminNav from '../../components/AdminNav';
 import LeadsTable from '../../components/LeadsTable';
 import Sidebar from '../../components/Sidebar';
-import { useGetAllLeadsQuery } from '../../store/services/leadService';
+import Pagination from '../../components/Pagination';
+import { useGetLeadsByPageQuery } from '../../store/services/leadService';
 
 function ShowLeads() {
   const [sideBar, setSidebar] = useState('-left-64');
   const [leads, setLeads] = useState([]);
-  const response = useGetAllLeadsQuery();
+  const [paginationData, setPaginationData] = useState({
+    perPage: 0,
+    count: 0
+  });
+  let { page } = useParams();
+  const { data = [], isFetching } = useGetLeadsByPageQuery(page ? page: 1);
+
+  if(!page) {
+    page = 1;
+  }
 
   const openSidebar = () => {
     setSidebar('-left-0');
@@ -18,11 +29,15 @@ function ShowLeads() {
   }
 
   useEffect(() => {
-    if(!response.isFetching) {
-        const data = response?.data?.data;
-        setLeads(data);   
+    if(!isFetching) {
+        const leadData = data?.data;
+        setLeads(leadData);   
+        setPaginationData({
+          perPage: data.perPage,
+          count: data.count
+        });
     }
-  }, [response]);
+  }, [data, isFetching]);
 
 
   return (
@@ -36,7 +51,17 @@ function ShowLeads() {
                 <h1 className='text-2xl font-medium text-gray-600'>All Leads</h1>
           </div>
           {
-              leads.length > 0 && <LeadsTable data={leads} />
+            leads && leads.length > 0 && 
+            <div>
+              <LeadsTable data={leads} />
+              <Pagination page={parseInt(page)} perPage={paginationData.perPage} count={paginationData.count}  />
+            </div>
+          }
+
+          {
+            !leads && <div>
+              <p>No leads Found</p>
+            </div>
           }
         </div>
       </section>
