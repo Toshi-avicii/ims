@@ -24,6 +24,33 @@ const getLeads = async (req, res) => {
   }
 };
 
+const getLeadsByPage = async (req, res) => {
+  try {
+    const { page } = req.params;
+    const count = await leadModel.find().countDocuments();
+    const perPage = 5;
+    const skip = (page - 1) * perPage;
+    const allLeads = await leadModel.find().skip(skip).limit(perPage);
+
+    if (allLeads.length > 0) {
+      res.status(200).json({
+        msg: `${allLeads.length} Leads Found`,
+        data: allLeads,
+        perPage,
+        count
+      });
+    } else {
+      res.status(200).json({
+        msg: "No Leads Found",
+      });
+    }
+  } catch (err) {
+    res.status(401).json({
+      msg: err.message,
+    });
+  }
+};
+
 const addLead = async (req, res) => {
   const { leadTitle, name, leadEmail, leadPhone, leadDesc, courseName, reference } =
   req.body;
@@ -116,7 +143,7 @@ const getLeadsByCounselorId = async (req, res) => {
 const updateOneLead = async (req, res) => {
   let result;
   const _id = req.params.leadId;
-  const { title, name, status, description } = req.body;
+  const { title, name, status, description, phone, course, email } = req.body;
 
   try {
     if (title) {
@@ -147,6 +174,33 @@ const updateOneLead = async (req, res) => {
       result = await leadModel.findOneAndUpdate(
         { _id },
         { description },
+        { new: true }
+      );
+    }
+
+    
+    if (phone) {
+      result = await leadModel.findOneAndUpdate(
+        { _id },
+        { phone },
+        { new: true }
+      );
+    }
+
+    
+    if (email) {
+      result = await leadModel.findOneAndUpdate(
+        { _id },
+        { email },
+        { new: true }
+      );
+    }
+
+    
+    if (course) {
+      result = await leadModel.findOneAndUpdate(
+        { _id },
+        { course },
         { new: true }
       );
     }
@@ -192,4 +246,5 @@ module.exports = {
   getLeadsByCounselorId,
   updateOneLead,
   deleteOneLead,
+  getLeadsByPage
 };

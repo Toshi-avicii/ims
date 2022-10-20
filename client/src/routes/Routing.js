@@ -12,7 +12,7 @@ function Routing() {
             <Route path="/" element={<PublicRoute><AdminLogin /></PublicRoute>} />
             <Route path='/dashboard'>
               <Route path="" element={<PrivateRoute><Products /></PrivateRoute>} />
-              <Route path="leads" element={<PrivateRoute><ShowLeads /></PrivateRoute>} />
+              <Route path="leads/:page" element={<PrivateRoute><ShowLeads /></PrivateRoute>} />
             </Route>
             <Route path='*' element={<div><p>Page not found</p></div>} />
         </Routes>

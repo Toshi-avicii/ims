@@ -27,6 +27,9 @@ const store = configureStore({
         "authReducer": authReducer,
         "leadReducer": leadReducer,
         "counselorReducer": counselorReducer
+    },
+    middleware: (getDefaultMiddleware) => {
+        return getDefaultMiddleware().concat([leadService.middleware])
     }
 });
 

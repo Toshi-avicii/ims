@@ -31,7 +31,7 @@ function Sidebar({ side, closeSidebar }) {
                     <ul>
                         <li className='flex mb-3 items-center font-medium'>
                             <i className="bi bi-layers-fill px-2 py-1 bg-primary text-xl text-white rounded mr-3"></i>
-                            <Link to="/dashboard/leads">Show All Leads</Link>
+                            <Link to="/dashboard/leads/1">Show All Leads</Link>
                         </li>
 
                         <li className='flex items-center font-medium'>
