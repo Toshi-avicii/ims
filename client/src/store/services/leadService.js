@@ -5,9 +5,8 @@ const leadService = createApi({
     tagTypes: 'leads',
     baseQuery: fetchBaseQuery({
         baseUrl: 'http://localhost:5000/api/',
-
         prepareHeaders: function(headers, { getState }) {
-            const reducers = getState();
+             const reducers = getState();
             const token = reducers?.authReducer?.adminToken;
             // authorization bearer token
             headers.set('authorization', token ? `Bearer: ${token}` : '');
@@ -33,7 +32,8 @@ const leadService = createApi({
                         url: 'leads',
                         method: 'GET'
                     }
-                }
+                },
+                providesTags: ['leads']
             }),
             getLeadsByPage: builder.query({
                 query: (pageNo) => {
@@ -43,10 +43,20 @@ const leadService = createApi({
                     }
                 },
                 providesTags: ['leads']
+            }),
+
+            deleteOneLead: builder.mutation({
+                query: (leadId) => {
+                    return {
+                        url: `leads/${leadId}`,
+                        method: "DELETE"
+                    }
+                },
+                invalidatesTags: ['leads']
             })
         }
     }
 });
 
-export const { useGetAllLeadsQuery, useGetLeadsByPageQuery, useUpdateOneLeadMutation } = leadService;
+export const { useGetAllLeadsQuery, useGetLeadsByPageQuery, useUpdateOneLeadMutation, useDeleteOneLeadMutation } = leadService;
 export default leadService;

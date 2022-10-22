@@ -26,6 +26,7 @@ const getLeads = async (req, res) => {
 
 const getLeadsByPage = async (req, res) => {
   try {
+    //for pagination...
     const { page } = req.params;
     const count = await leadModel.find().countDocuments();
     const perPage = 5;
@@ -143,7 +144,7 @@ const getLeadsByCounselorId = async (req, res) => {
 const updateOneLead = async (req, res) => {
   let result;
   const _id = req.params.leadId;
-  const { title, name, status, description, phone, course, email } = req.body;
+  const { title, name, status, description, phone, course, email, refName, refPhone } = req.body;
 
   try {
     if (title) {
@@ -201,6 +202,22 @@ const updateOneLead = async (req, res) => {
       result = await leadModel.findOneAndUpdate(
         { _id },
         { course },
+        { new: true }
+      );
+    }
+
+    if (refName) {
+      result = await leadModel.findOneAndUpdate(
+        { _id },
+        { "reference.name": refName },
+        { new: true }
+      );
+    }
+
+    if (refPhone) {
+      result = await leadModel.findOneAndUpdate(
+        { _id },
+        { "reference.phoneNo": refPhone },
         { new: true }
       );
     }

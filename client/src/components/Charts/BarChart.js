@@ -1,4 +1,4 @@
-import { Bar } from 'react-chartjs-2';
+ import { Bar } from 'react-chartjs-2';
 import { Chart } from 'chart.js/auto';
 
 function BarChart({ chartData }) {
@@ -14,7 +14,7 @@ function BarChart({ chartData }) {
                             display: true,
                             text: `No. of leads generated this year (${currentYear})`
                         },
-                        legend: {
+                        legend: { 
                             display: true,
                             position: 'bottom'
                         }

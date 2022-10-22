@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useDeleteOneLeadMutation } from "../store/services/leadService";
 import EditModal from "./EditModal";
 
 function LeadTableRow({ item, index, day, year, month, hour, minute, dayNum }) {
@@ -13,6 +14,7 @@ function LeadTableRow({ item, index, day, year, month, hour, minute, dayNum }) {
   ];
 
   const [openEditModal, setOpenEditModal] = useState(false);
+  const [deleteOneLead, response] = useDeleteOneLeadMutation();
   
   const updateHandler = (e) => {
     setOpenEditModal(true);
@@ -23,7 +25,7 @@ function LeadTableRow({ item, index, day, year, month, hour, minute, dayNum }) {
   }
 
   const deleteHandler = (e) => {
-    console.log(e)
+    deleteOneLead(item._id);
   }
 
   return (
@@ -111,6 +113,7 @@ function LeadTableRow({ item, index, day, year, month, hour, minute, dayNum }) {
                 title={item.title}
                 desc={item.description}
                 id={item._id}
+                reference={item.reference}
                 closeModal={closeModal}
             />
         }
