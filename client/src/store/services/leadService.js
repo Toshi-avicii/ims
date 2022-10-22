@@ -53,10 +53,19 @@ const leadService = createApi({
                     }
                 },
                 providesTags: ['leads']
-            })
+            }),
+
+            addLeads: builder.mutation({
+                query: () => {
+                    return {
+                        url: "leads",
+                        method: "POST"
+                    }
+                }
+            }),
         }
     }
 });
 
-export const { useGetAllLeadsQuery, useGetLeadsByPageQuery, useUpdateOneLeadMutation, useDeleteOneLeadMutation } = leadService;
+export const { useGetAllLeadsQuery, useGetLeadsByPageQuery, useUpdateOneLeadMutation, useDeleteOneLeadMutation, useAddLeadsMutation } = leadService;
 export default leadService;
