@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useAddLeadsMutation } from "../store/services/leadService";
 import TextInput from "./General/TextInput";
 
 function LeadsAddForm() {
@@ -14,6 +15,11 @@ function LeadsAddForm() {
     leadRefName: "",
     leadRefPhone: "",
   });
+
+  const [postLeads, response] = useAddLeadsMutation();
+
+  console.log(response)
+  console.log(postLeads)
 
   const changeLead = (e) => {
     setAddLeads({ ...addLeads, [e.target.name]: e.target.value });
