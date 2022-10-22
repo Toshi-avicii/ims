@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { useNavigate } from "react-router-dom";
 import { useUpdateOneLeadMutation } from "../store/services/leadService";
@@ -17,7 +17,7 @@ function EditModal({
   reference
 }) {
     
-  const modalRef = useRef(null);
+  // const modalRef = useRef(null);
   const navigate = useNavigate();
   let leadReference = reference ? reference : {
     name: '',

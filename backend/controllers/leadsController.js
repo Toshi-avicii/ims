@@ -240,7 +240,6 @@ const updateOneLead = async (req, res) => {
 const deleteOneLead = async (req, res) => {
   try {
     const result = await leadModel.deleteOne({ _id: req.params.leadId });
-    console.log(result);
     if (result) {
         res.status(201).json({
             msg: "lead successfully deleted",
