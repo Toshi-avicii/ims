@@ -14,6 +14,35 @@ const getCounselors = async (req, res) => {
   }
 };
 
+const getCounselorsByPage = async(req, res) => {
+    try{
+      const { page } = req.params;
+      const count =  await userModel.find({ role: 'counselor' }).countDocuments();
+      const perPage = 5;
+      const skip = (page - 1) * perPage;
+      const allCounselors = await userModel.find({ role: 'counselor' }).skip(skip).limit(perPage);
+
+      if(allCounselors.length > 0) {
+        res.status(200).json({
+          msg: `${allCounselors.length} Counselors Found`,
+          data: allCounselors,
+          perPage,
+          count
+        })
+      } else {
+        res.status(401).json({
+          msg: "No Counselors found"
+        })
+      }
+
+    } catch (err) {
+      res.status(401).json({
+        msg: err.msg
+
+      });
+    }
+}
+
 const addCounselor = async (req, res) => {
   const { name, email, password } = req.body; 
   const errors = validationResult(req);
@@ -133,4 +162,5 @@ module.exports = {
   deleteCounselors,
   getOneCounselor,
   updateCounselor,
+  getCounselorsByPage
 };

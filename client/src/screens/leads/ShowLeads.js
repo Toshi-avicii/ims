@@ -30,8 +30,9 @@ function ShowLeads() {
 
   useEffect(() => {
     if(!isFetching) {
+      // console.log(data)
         const leadData = data?.data;
-        setLeads(leadData);   
+        setLeads(leadData); 
         setPaginationData({
           perPage: data.perPage,
           count: data.count
@@ -60,7 +61,7 @@ function ShowLeads() {
 
           {
             !leads && <div>
-              <p>No leads Found</p>
+              <p className=''>No leads Found</p>
             </div>
           }
         </div>
