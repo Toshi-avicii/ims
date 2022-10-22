@@ -31,16 +31,15 @@ function Sidebar({ side, closeSidebar }) {
                     <ul>
                         <li className='flex mb-3 items-center font-medium'>
                             <i className="bi bi-layers-fill px-2 py-1 bg-primary text-xl text-white rounded mr-3"></i>
-                            <Link to="/dashboard/leads/1">Show All Leads</Link>
+                            <Link to="/dashboard/leads/pages/1">Show All Leads</Link>
                         </li>
 
                         <li className='flex items-center font-medium'>
                             <i className="bi bi-plus px-2 py-1 bg-primary text-xl text-white rounded mr-3"></i>
-                            <p>Create Lead</p>
+                            <Link to="/dashboard/leads/create-new-lead">Create Lead</Link>
                         </li>
                     </ul>
                 </div>
-
             }
                 
             <li className={`p-3 text-md font-medium cursor-pointer bg-white rounded-md ${open ? '' : 'mt-4'} ${open ? 'rounded-t-md' : 'rounded-md'} flex items-center`} onClick={() => setOpenCounselor(!openCounselor)}>

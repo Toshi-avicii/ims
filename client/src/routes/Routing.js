@@ -4,6 +4,7 @@ import Products from '../screens/dashboard/Products';
 import ShowLeads from '../screens/leads/ShowLeads';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
+import LeadForm from '../screens/leads/LeadForm';
 
 function Routing() {
   return (
@@ -12,7 +13,8 @@ function Routing() {
             <Route path="/" element={<PublicRoute><AdminLogin /></PublicRoute>} />
             <Route path='/dashboard'>
               <Route path="" element={<PrivateRoute><Products /></PrivateRoute>} />
-              <Route path="leads/:page" element={<PrivateRoute><ShowLeads /></PrivateRoute>} />
+              <Route path="leads/create-new-lead" element={<PrivateRoute><LeadForm /></PrivateRoute>} />
+              <Route path="leads/pages/:page" element={<PrivateRoute><ShowLeads /></PrivateRoute>} />
             </Route>
             <Route path='*' element={<div><p>Page not found</p></div>} />
         </Routes>

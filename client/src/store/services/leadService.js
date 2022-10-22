@@ -52,7 +52,7 @@ const leadService = createApi({
                         method: "DELETE"
                     }
                 },
-                invalidatesTags: ['leads']
+                providesTags: ['leads']
             })
         }
     }

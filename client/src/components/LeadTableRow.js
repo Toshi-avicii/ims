@@ -14,7 +14,7 @@ function LeadTableRow({ item, index, day, year, month, hour, minute, dayNum }) {
   ];
 
   const [openEditModal, setOpenEditModal] = useState(false);
-  const [deleteOneLead, response] = useDeleteOneLeadMutation();
+  const [deleteOneLead] = useDeleteOneLeadMutation();
   
   const updateHandler = (e) => {
     setOpenEditModal(true);
