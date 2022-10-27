@@ -30,7 +30,6 @@ function ShowLeads() {
 
   useEffect(() => {
     if(!isFetching) {
-      // console.log(data)
         const leadData = data?.data;
         setLeads(leadData); 
         setPaginationData({
