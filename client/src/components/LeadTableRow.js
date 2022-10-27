@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDeleteOneLeadMutation } from "../store/services/leadService";
 import EditModal from "./EditModal";
+import { toast, ToastContainer } from 'react-toastify';
 
 function LeadTableRow({ item, index, day, year, month, hour, minute, dayNum }) {
   let days = [
@@ -14,7 +15,7 @@ function LeadTableRow({ item, index, day, year, month, hour, minute, dayNum }) {
   ];
 
   const [openEditModal, setOpenEditModal] = useState(false);
-  const [deleteOneLead] = useDeleteOneLeadMutation();
+  const [deleteOneLead, response] = useDeleteOneLeadMutation();
   
   const updateHandler = (e) => {
     setOpenEditModal(true);
@@ -27,6 +28,32 @@ function LeadTableRow({ item, index, day, year, month, hour, minute, dayNum }) {
   const deleteHandler = (e) => {
     deleteOneLead(item._id);
   }
+
+  useEffect(() => {
+    if(response.isLoading && response.status === "pending") {
+      toast.loading('Deleting...', {
+        theme: 'light',
+        toastId: 'Delete-Lead',
+        autoClose: 3000
+      });
+    }
+    if(response.isSuccess) {
+      toast.update('Delete-Lead', {
+        render: "Lead Deleted Successfully",
+        type: 'success',
+        isLoading: false,
+        autoClose: 3000
+      });
+    }
+    if(response.isError) {
+      toast.update("Delete-Lead", {
+        render: "Error Occurred",
+        type: 'error',
+        isLoading: false,
+        autoClose: 3000
+      });
+    }
+  }, [response.isSuccess, response.isError, response.isLoading, response.status]);
 
   return (
     <>
@@ -100,6 +127,7 @@ function LeadTableRow({ item, index, day, year, month, hour, minute, dayNum }) {
         >
           Delete
         </button>
+        <ToastContainer />
       </td>
     </tr>
     {

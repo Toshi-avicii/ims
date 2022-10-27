@@ -14,11 +14,13 @@ function Pagination({ page, perPage, count }) {
     const links = () => {
         const allLinks = [];
         for(let i = startLoop; i <= endLoop; i++) {
-            allLinks.push(
-                <li key={i} className='px-3 py-1 rounded-sm bg-primary text-white mr-4'>
-                    <Link to={`/dashboard/leads/pages/${i}`}>{i}</Link>
-                </li>
-            )
+            if(i > 0) {
+                allLinks.push(
+                    <li key={i} className='px-3 py-1 rounded-sm bg-primary text-white mr-4'>
+                        <Link to={`/dashboard/leads/pages/${i}`}>{i}</Link>
+                    </li>
+                )
+            }
         }
 
         return allLinks;

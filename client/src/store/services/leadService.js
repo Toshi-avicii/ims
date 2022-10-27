@@ -52,17 +52,18 @@ const leadService = createApi({
                         method: "DELETE"
                     }
                 },
-                providesTags: ['leads']
+                invalidatesTags: ['leads']
             }),
 
             addLeads: builder.mutation({
-                query: () => {
+                query: (leadData) => {
                     return {
                         url: "leads",
-                        method: "POST"
+                        method: "POST",
+                        body: leadData
                     }
                 }
-            }),
+            })
         }
     }
 });

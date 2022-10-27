@@ -1,47 +1,108 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAddLeadsMutation } from "../store/services/leadService";
 import TextInput from "./General/TextInput";
+import { useDispatch, useSelector } from 'react-redux';
+import { sendSuccessAlert, sendFailureAlert, sendLoadingAlert } from "../store/reducers/globalReducer";
+import 'react-toastify/dist/ReactToastify.css';
+import { toast, ToastContainer } from 'react-toastify';
 
+// toast.configure();
 function LeadsAddForm() {
   const [addLeads, setAddLeads] = useState({
-    leadName: "",
+    name: "",
     leadPhone: "",
     leadEmail: "",
-    leadCourse: "",
-    leadStatus: "",
+    courseName: "it expert",
     leadTitle: "",
     leadDesc: "",
-    leadId: "",
-    leadRefName: "",
-    leadRefPhone: "",
+    refName: "",
+    refPhone: "",
   });
 
   const [postLeads, response] = useAddLeadsMutation();
-
-  console.log(response)
-  console.log(postLeads)
+  const dispatch = useDispatch();
+  const success = useSelector(state => state.appGlobalReducer.alertSuccess);
+  const loading = useSelector(state => state.appGlobalReducer.alertLoading);
+  const failure = useSelector(state => state.appGlobalReducer.alertFailure);
 
   const changeLead = (e) => {
     setAddLeads({ ...addLeads, [e.target.name]: e.target.value });
   };
-
   
   const changeLeadDesc = (e) => {
     setAddLeads({ ...addLeads, leadDesc: e.target.value });
   };
 
+  const addLeadHandler = (e) => {
+    e.preventDefault();
+    postLeads(addLeads);
+
+    
+    // if(loading) {
+    //   toast.loading('Result Pending', {
+    //     theme: 'light',
+    //     toastId: 'Loading'
+    //   });
+    // }
+
+    // if(success) {
+    //   toast.success('Lead Added Successfully, Check your email', {
+    //     theme: 'light',
+    //     toastId: 'Lead Added Successfully'
+    //   });
+    // }
+
+    // let errorMsg = response?.error?.data?.msg ? response?.error?.data?.msg : 'Error Occurred';
+
+    // if(failure) {
+    //   toast.error(errorMsg, {
+    //     theme: 'light',
+    //     toastId: 'Error Occurred'
+    //   })
+    // }
+  }
+
+  useEffect(() => {
+    if(response.isLoading && response.status === "pending") {
+      dispatch(sendLoadingAlert());
+      toast.loading('Result Pending', {
+        theme: 'light',
+        toastId: 'Add-Lead',
+        autoClose: 3000
+      });
+    }
+    if(response.isSuccess) {
+      dispatch(sendSuccessAlert());
+      toast.update('Add-Lead', {
+        render: "Lead Added Successfully, Check your email",
+        type: 'success',
+        isLoading: false,
+        autoClose: 3000
+      });
+    }
+    if(response.isError) {
+      dispatch(sendFailureAlert());
+      toast.update("Add-Lead", {
+        render: "Error Occurred",
+        type: 'error',
+        isLoading: false,
+        autoClose: 3000
+      });
+    }
+  }, [dispatch, response.isSuccess, response.isError, response.isLoading, response.status])
+
   return (
-    <div className="bg-slate-100 p-5 lg:p-8 md:p-5 sm:p-5 w-full lg:w-9/12 md:w-full sm:w-full sm:p-4 rounded-md">
+    <div className="bg-slate-100 p-5 lg:p-8 md:p-5 sm:p-5 w-full lg:w-9/12 md:w-full sm:w-full rounded-md">
       <div className="">
-        <form>
+        <form onSubmit={addLeadHandler}>
           <div className="md:grid md:place-items-center md:grid-cols-2 md:gap-4">
             <TextInput
               labelText="Lead Name"
               inputType="text"
-              inputName="leadName"
+              inputName="name"
               inputPlaceholder="Name here"
               changeEvent={changeLead}
-              inputValue={addLeads.leadName}
+              inputValue={addLeads.name}
               width="w-full"
             />
 
@@ -70,9 +131,9 @@ function LeadsAddForm() {
               <select
                 id="course"
                 className="block w-full p-4 bg-slate-50 outline-none rounded-lg"
-                value={addLeads.leadCourse}
+                value={addLeads.courseName}
                 onChange={changeLead}
-                name="leadCourse"
+                name="courseName"
               >
                 <option value="it expert">IT Expert</option>
                 <option value="dca">DCA</option>
@@ -80,41 +141,25 @@ function LeadsAddForm() {
               </select>
             </div>
           </div>
-          <div>
-            <label className="block mb-4" htmlFor="leadStatus">
-              Lead Status
-            </label>
-            <select
-              id="status"
-              className="block w-full p-4 bg-slate-50 outline-none mt-4 rounded-lg"
-              value={addLeads.leadStatus}
-              onChange={changeLead}
-              name="leadStatus"
-            >
-              <option value="Pending">Pending</option>
-              <option value="Resolved">Resolved</option>
-              <option value="Rejected">Rejected</option>
-            </select>
-          </div>
 
           <div className="md:grid md:place-items-center md:grid-cols-2 md:gap-4">
             <TextInput
               labelText="Reference name"
               inputType="text"
-              inputName="leadRefName"
+              inputName="refName"
               inputPlaceholder="Reference name"
               changeEvent={changeLead}
-              inputValue={addLeads.leadRefName}
+              inputValue={addLeads.refName}
               width="w-full"
             />
 
             <TextInput
               labelText="Reference phone no."
               inputType="text"
-              inputName="leadRefPhone"
+              inputName="refPhone"
               inputPlaceholder="Reference phone no."
               changeEvent={changeLead}
-              inputValue={addLeads.leadRefPhone}
+              inputValue={addLeads.refPhone}
               width="w-full"
             />
           </div>
@@ -148,6 +193,7 @@ function LeadsAddForm() {
             />
           </div>
         </form>
+        <ToastContainer />
       </div>
     </div>
   );

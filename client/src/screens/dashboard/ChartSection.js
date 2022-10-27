@@ -26,8 +26,8 @@ function ChartSection() {
                 label: 'No. of leads generated per month',
                 backgroundColor: 'rgba(75,192,192,1)',
                 borderColor: 'rgba(0,0,0,1)',
-                borderWidth: 2,
-                data: [6, 1, 2, 4, 5, 6, 7, 10, 10, 11, 13, 11]
+                borderWidth: 0,
+                data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
             }
         ]
     });

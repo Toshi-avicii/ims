@@ -18,6 +18,7 @@ import leadService from './services/leadService';
 import leadReducer from './reducers/leadReducer';
 import counselorReducer from './reducers/counselorReducer';
 import counselorService from './services/counselorService';
+import globalReducer from "./reducers/globalReducer";
 
 const store = configureStore({
     reducer: {
@@ -26,10 +27,11 @@ const store = configureStore({
         [counselorService.reducerPath]: counselorService.reducer,
         "authReducer": authReducer,
         "leadReducer": leadReducer,
-        "counselorReducer": counselorReducer
+        "counselorReducer": counselorReducer,
+        "appGlobalReducer": globalReducer
     },
     middleware: (getDefaultMiddleware) => {
-        return getDefaultMiddleware().concat([leadService.middleware])
+        return getDefaultMiddleware().concat([leadService.middleware, counselorService.middleware])
     }
 });
 

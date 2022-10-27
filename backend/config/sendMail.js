@@ -1,8 +1,7 @@
-
 const userModel = require('../models/Users');
 const nodemailer = require('nodemailer');
 
-async function sendMail(str, tokenInfo ,data) {
+async function sendMail(str, tokenInfo, data) {
     try {
         // Generate test SMTP service account from ethereal.email
         // Only needed if you don't have a real mail account for testing
