@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const counselorSlice = createSlice({
+const counselorReducer = createSlice({
     name: 'counselorInfo',
     initialState: {
         counselorCount: 0
@@ -12,5 +12,5 @@ const counselorSlice = createSlice({
     }
 });
 
-export const { fetchCounselorData } = counselorSlice.actions;
-export default counselorSlice.reducer;
+export const { fetchCounselorData } = counselorReducer.actions;
+export default counselorReducer.reducer;
