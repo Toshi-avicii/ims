@@ -8,6 +8,8 @@ function Pagination({ page, perPage, count }) {
     if(diff <= 3) {
         startLoop = totalLinks - 1; 
     }
+    
+    console.log(page, perPage, count);
 
     let endLoop = startLoop + 1;
 
@@ -41,7 +43,7 @@ function Pagination({ page, perPage, count }) {
                 </Link></li>
         }
     }
-  return (
+      return (
     count > 3 && 
     <ul className='flex w-2/4 m-auto justify-center mt-9 pb-9'>
         {prev()}

@@ -194,7 +194,7 @@ function ChartSection() {
                     // console.log(item);
                         let coun = fetchLeadsByCounselorId(item.id);
                         coun.then(res => {
-                            console.log(res);
+                            // console.log(res);
                             const monthData = (month, year, counselorId) => {
                                       
                                 const monthMatch = leadsData.filter(lead => {
@@ -208,8 +208,8 @@ function ChartSection() {
                                 });
                                 return monthMatch;
                             }
-                            console.log(monthData('October', currentYear, "633a863bfc6e50810c44b661"));
-                            console.log(monthData('September', currentYear, "633a863bfc6e50810c44b661"));
+                            // console.log(monthData('October', currentYear, "633a863bfc6e50810c44b661"));
+                            // console.log(monthData('September', currentYear, "633a863bfc6e50810c44b661"));
                             
                         }).catch(err => {
                             console.log(err.message);

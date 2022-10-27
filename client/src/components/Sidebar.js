@@ -5,6 +5,25 @@ function Sidebar({ side, closeSidebar }) {
   const [open, setOpen] = useState(false);
   const [openCounselor, setOpenCounselor] = useState(false);
 
+  
+  const leadsHandler = () => {
+    if(open === true) {
+      setOpen(false)
+      setOpen(!open)
+    } else {
+      setOpen(!open)
+    }
+  }
+
+  const counselorsHandler = () => {
+    if(!open) {
+      setOpenCounselor(!openCounselor)
+    } else {
+      setOpen(!open)
+      setOpenCounselor(!openCounselor)
+    }
+  }
+
   return (
     <>
     <div className={`fixed overflow-y-auto top-0 ${side} sm:left-0 w-64 h-screen bg-slate-100 font-primary z-10 transition-all`}>
@@ -20,7 +39,7 @@ function Sidebar({ side, closeSidebar }) {
                 <Link to="/dashboard">Dashboard</Link>
             </li>
 
-            <li className={`p-3 text-md font-medium cursor-pointer bg-white ${open ? 'rounded-t-md' : 'rounded-md'} flex items-center`} onClick={() => setOpen(!open)}>
+            <li className={`p-3 text-md font-medium cursor-pointer bg-white ${open ? 'rounded-t-md' : 'rounded-md'} flex items-center`} onClick={leadsHandler}>
                 <i className="bi bi-person-lines-fill mr-3 px-2 py-1 bg-primary text-xl text-white rounded"></i>
                 <p className='inline'>Leads</p>
                 <i className={`bi ${open ? `bi-caret-up-fill` :`bi-caret-down-fill`} ml-auto mr-3`}></i>
@@ -42,7 +61,7 @@ function Sidebar({ side, closeSidebar }) {
                 </div>
             }
                 
-            <li className={`p-3 text-md font-medium cursor-pointer bg-white rounded-md ${open ? '' : 'mt-4'} ${open ? 'rounded-t-md' : 'rounded-md'} flex items-center`} onClick={() => setOpenCounselor(!openCounselor)}>
+            <li className={`p-3 text-md font-medium cursor-pointer bg-white rounded-md ${open ? '' : 'mt-4'} ${open ? 'rounded-t-md' : 'rounded-md'} flex items-center`} onClick={counselorsHandler}>
                 <i className="bi bi-people-fill mr-3 px-2 py-1 bg-primary text-xl text-white rounded"></i>
                 <p className='font-medium inline'>Counselors</p>
                 <i className={`bi ${openCounselor ? `bi-caret-up-fill` : `bi-caret-down-fill`} ml-auto mr-3`}></i>
@@ -53,7 +72,7 @@ function Sidebar({ side, closeSidebar }) {
                     <ul>
                         <li className='flex mb-3 items-center font-medium'>
                             <i className="bi bi-layers-fill px-2 py-1 bg-primary text-xl text-white rounded mr-3"></i>
-                            <Link to="/dashboard/counselors" className='text-sm'>Show All Counselors</Link>
+                            <Link to="/dashboard/counselors/pages/1" className='text-sm'>Show All Counselors</Link>
                         </li>
 
                         <li className='flex items-center font-medium'>
