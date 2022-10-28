@@ -1,7 +1,7 @@
 import profileImg from '../../Pictures/person-circle.svg';
 import ProfileStats from './ProfileStats';
 
-function ProfileHeader() {
+function ProfileHeader({ userData }) {
   return (
     <div className="bg-slate-200">
       <div className="bg-black sm:h-50 h-[180px] rounded-t-md"></div>
@@ -21,9 +21,8 @@ function ProfileHeader() {
           </div>
 
           <div className="text-center lg:text-start md:absolute md:top-[80px] md:right-10 lg:static">
-            <h2 className="text-md text-black md:text-white ml-2 mb-3 w-max">
-              Admin Profile
-              <span className="block">Delhi</span>
+            <h2 className="text-md text-black md:text-white lg:w-min ml-2 mb-3">
+              {userData.name}
             </h2>
           </div>
         </div>

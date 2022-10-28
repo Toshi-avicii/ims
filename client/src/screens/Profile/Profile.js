@@ -7,6 +7,11 @@ import jwtDecode from 'jwt-decode';
 
 function Profile() {
   const [sideBar, setSidebar] = useState('-left-64');
+  const [userData, setUserData] = useState({
+    name: '',
+    email: ''
+  });
+
   const openSidebar = () => {
     setSidebar('-left-0');
   }
@@ -17,9 +22,7 @@ function Profile() {
 
   const token = useSelector(state => state.authReducer.adminToken);
   const decode = jwtDecode(token);
-  console.log(decode)
   const userId = decode.id;
-  console.log(userId);
 
   useEffect(() => {
     const fetchDataByLoginUserId = async () => {
@@ -28,16 +31,15 @@ function Profile() {
           method: "GET"
         });
   
-        console.log(req)
         const result = await req.json();
-        console.log(result);
+        setUserData(result.data);
   
       } catch (err) {
         console.log(err.message);      
       }
     }
     fetchDataByLoginUserId();
-  }, []);
+  }, [userId]);
 
   return (
     <>
@@ -45,7 +47,7 @@ function Profile() {
       <Sidebar side={sideBar} closeSidebar={closeSidebar} />
       <AdminNav openSidebar={openSidebar} />
         <section className='ml-0 sm:ml-64 bg-white min-h-screen pt-24 sm:pt-4 px-4 sm:px-4'>
-        <ProfileHeader />
+        <ProfileHeader userData={userData} />
         </section>
       </div>
     </>
