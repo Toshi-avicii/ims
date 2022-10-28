@@ -4,7 +4,7 @@ const leadSlice = createSlice({
     name: "leadInfo",
     initialState: {
         leadsThisMonth: 0,
-        pendingLeads: null,
+        pendingLeads: 0,
         newLeadsToday: 0,
     },
 

@@ -21,35 +21,41 @@ const InfoSection = () => {
       dispatch(fetchCounselorData({counselorCount: response?.data?.counselors.length}));
     }
     if(!isFetching) {
-      const pendingLeadsCount = data.data.filter(lead => {
+      let pendingLeadsCount = [];
+      console.log(Array.isArray(data), data);
+      if(data.data) {
+        pendingLeadsCount = data?.data?.filter(lead => {
           return lead.status === "Pending";
-      });
+        });
+      }
 
-      const leadsToday = data.data.filter(lead => {
-        let date = new Date();
-        let leadDate = new Date(lead.date).getDate();
-        let leadMonth = new Date(lead.date).getMonth();
-        let leadYear = new Date(lead.date).getFullYear();
-        let today = date.getDate();
-        let currentMonth = date.getMonth();
-        let currentYear = date.getFullYear();
-
-        return (leadDate === today) && (leadMonth === currentMonth) && (leadYear === currentYear);
-      });
-
-      const leadDates = data.data.filter((item) => {
-        let leadDate = new Date(item.date);
-        let leadMonth = leadDate.getMonth();
-        const currentMonth = new Date().getMonth();
-
-        return leadMonth === currentMonth;
-      });
-
-      dispatch(fetchLeadsData({ 
-        leadsCount: leadDates.length,
-        pendingLeads:  pendingLeadsCount.length,
-        newLeads: leadsToday.length
-      }));
+      if(data.data) {
+        const leadsToday = data.data.filter(lead => {
+          let date = new Date();
+          let leadDate = new Date(lead.date).getDate();
+          let leadMonth = new Date(lead.date).getMonth();
+          let leadYear = new Date(lead.date).getFullYear();
+          let today = date.getDate();
+          let currentMonth = date.getMonth();
+          let currentYear = date.getFullYear();
+  
+          return (leadDate === today) && (leadMonth === currentMonth) && (leadYear === currentYear);
+        });
+  
+        const leadDates = data.data.filter((item) => {
+          let leadDate = new Date(item.date);
+          let leadMonth = leadDate.getMonth();
+          const currentMonth = new Date().getMonth();
+  
+          return leadMonth === currentMonth;
+        });
+        
+        dispatch(fetchLeadsData({ 
+          leadsCount: leadDates.length,
+          pendingLeads:  pendingLeadsCount.length,
+          newLeads: leadsToday.length
+        }));
+      }
     }
 
   }, [dispatch, data, isFetching, response]);

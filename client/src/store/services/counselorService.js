@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const counselorService = createApi({
     reducerPath: "counselors",
+    tagTypes: 'counselorData',
     baseQuery: fetchBaseQuery({
         baseUrl: 'http://localhost:5000/api/',
 
@@ -31,7 +32,11 @@ const counselorService = createApi({
                         method: 'GET'
                     }
                 },
+<<<<<<< HEAD
+                providesTags: ['counselorData']
+=======
                 providesTags: ['counselors']
+>>>>>>> c81c6918d5f13ca8158482a9e218047d489a0915
             })
         }
     }

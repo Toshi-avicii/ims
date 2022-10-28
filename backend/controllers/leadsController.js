@@ -53,7 +53,7 @@ const getLeadsByPage = async (req, res) => {
 };
 
 const addLead = async (req, res) => {
-  const { leadTitle, name, leadEmail, leadPhone, leadDesc, courseName, reference } =
+  const { leadTitle, name, leadEmail, leadPhone, leadDesc, courseName, refName, refPhone } =
   req.body;
   const errors = validationResult(req);
   if (errors.isEmpty()) {
@@ -65,7 +65,10 @@ const addLead = async (req, res) => {
         phone: leadPhone,
         description: leadDesc,
         course: courseName,
-        reference,
+        reference: {
+          name: refName,
+          phoneNo: refPhone
+        },
         counselor: req.tokenInfo.id,
       });
 
@@ -82,6 +85,7 @@ const addLead = async (req, res) => {
       }
     } catch (err) {
       if(err.message.includes('phone')) {
+        console.log(req.body);
         return res.status(500).json({ msg: "Phone no. already exists" });
       } else if(err.message.includes('email')) {
         return res.status(500).json({ msg: "Email already exists" });
