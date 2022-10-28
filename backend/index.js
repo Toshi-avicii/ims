@@ -7,11 +7,13 @@ const authRoute = require('./routes/authRoute');
 const counselorsRoute = require('./routes/counselorsRoute');
 const leadsRoute = require('./routes/leadsRoute');
 const adminRoute = require('./routes/adminRoute');
+const path = require('path');
 
 // db connection 
 connect();
 app.use(cors());
 app.use(express.json());
+app.use(express.static(path.join(__dirname, 'images/')));
 
 app.use("/api/admin", adminRoute);
 app.use("/api", authRoute);

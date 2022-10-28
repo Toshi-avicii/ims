@@ -18,6 +18,10 @@ const userSchema = mongoose.Schema({
     role: {
         type: String,
         require: [true, "role must be required"]
+    },
+    photo: {
+        type: String,
+        default: 'user-default.png'
     }
 });
 

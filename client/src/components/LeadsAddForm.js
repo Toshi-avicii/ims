@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import { useAddLeadsMutation } from "../store/services/leadService";
 import TextInput from "./General/TextInput";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { sendSuccessAlert, sendFailureAlert, sendLoadingAlert } from "../store/reducers/globalReducer";
 import 'react-toastify/dist/ReactToastify.css';
 import { toast, ToastContainer } from 'react-toastify';
 
-// toast.configure();
 function LeadsAddForm() {
   const [addLeads, setAddLeads] = useState({
     name: "",
@@ -21,9 +20,6 @@ function LeadsAddForm() {
 
   const [postLeads, response] = useAddLeadsMutation();
   const dispatch = useDispatch();
-  const success = useSelector(state => state.appGlobalReducer.alertSuccess);
-  const loading = useSelector(state => state.appGlobalReducer.alertLoading);
-  const failure = useSelector(state => state.appGlobalReducer.alertFailure);
 
   const changeLead = (e) => {
     setAddLeads({ ...addLeads, [e.target.name]: e.target.value });
@@ -36,37 +32,13 @@ function LeadsAddForm() {
   const addLeadHandler = (e) => {
     e.preventDefault();
     postLeads(addLeads);
-
-    
-    // if(loading) {
-    //   toast.loading('Result Pending', {
-    //     theme: 'light',
-    //     toastId: 'Loading'
-    //   });
-    // }
-
-    // if(success) {
-    //   toast.success('Lead Added Successfully, Check your email', {
-    //     theme: 'light',
-    //     toastId: 'Lead Added Successfully'
-    //   });
-    // }
-
-    // let errorMsg = response?.error?.data?.msg ? response?.error?.data?.msg : 'Error Occurred';
-
-    // if(failure) {
-    //   toast.error(errorMsg, {
-    //     theme: 'light',
-    //     toastId: 'Error Occurred'
-    //   })
-    // }
   }
 
   useEffect(() => {
     if(response.isLoading && response.status === "pending") {
       dispatch(sendLoadingAlert());
       toast.loading('Result Pending', {
-        theme: 'light',
+        theme: 'colored',
         toastId: 'Add-Lead',
         autoClose: 3000
       });
@@ -77,7 +49,8 @@ function LeadsAddForm() {
         render: "Lead Added Successfully, Check your email",
         type: 'success',
         isLoading: false,
-        autoClose: 3000
+        autoClose: 3000,
+        theme: 'colored'
       });
     }
     if(response.isError) {
@@ -86,7 +59,8 @@ function LeadsAddForm() {
         render: "Error Occurred",
         type: 'error',
         isLoading: false,
-        autoClose: 3000
+        autoClose: 3000,
+        theme: 'colored'
       });
     }
   }, [dispatch, response.isSuccess, response.isError, response.isLoading, response.status])
