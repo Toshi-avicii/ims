@@ -1,10 +1,16 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logout } from '../store/reducers/authReducer';
 
 function Sidebar({ side, closeSidebar }) {
   const [open, setOpen] = useState(false);
   const [openCounselor, setOpenCounselor] = useState(false);
 
+  const dispatch = useDispatch();
+  const adminLogout = (e) => {
+   dispatch(logout());
+  }
   
   const leadsHandler = () => {
     if(open === true) {
@@ -89,12 +95,12 @@ function Sidebar({ side, closeSidebar }) {
         <ul className='px-6 py-2'>
             <li className='p-3 text-md font-medium cursor-pointer bg-white rounded-md mb-5'>
                 <i className="bi bi-person-square mr-3 px-2 py-1 bg-primary text-xl text-white rounded"></i>
-                <Link to="/profile">Profile</Link>
+                <Link to="/dashboard/profile">Profile</Link>
             </li>
 
             <li className='p-3 text-md font-medium cursor-pointer bg-white rounded-md mb-5'>
-                <i className="bi bi-box-arrow-left mr-3 px-2 py-1 bg-primary text-xl text-white rounded"></i>
-                <Link to="/profile">Logout</Link>
+                <i className="bi bi-box-arrow-left mr-3 px-2 py-1 bg-primary text-xl text-white rounded" onClick={adminLogout}></i>
+                <Link to="/">Logout</Link>
             </li>
         </ul>
     </div>
