@@ -8,8 +8,6 @@ function Pagination({ page, perPage, count }) {
     if(diff <= 3) {
         startLoop = totalLinks - 1; 
     }
-    
-    console.log(page, perPage, count);
 
     let endLoop = startLoop + 1;
 

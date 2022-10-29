@@ -9,6 +9,7 @@ function CounselorTable({ data }) {
                 <thead>
                     <tr className="border-b border-b-gray-300 bg-white text-center">
                         <th className="p-4 font-semibold text-gray-700 text-sm uppercase whitespace-nowrap">S.no</th>
+                        <th className="p-4 font-semibold text-gray-700 text-sm uppercase whitespace-nowrap">Image</th>
                         <th className="p-4 font-semibold text-gray-700 text-sm uppercase whitespace-nowrap">Name</th>
                         <th className="p-4 font-semibold text-gray-700 text-sm uppercase whitespace-nowrap">Email</th>
                     </tr>

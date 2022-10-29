@@ -83,7 +83,7 @@ function Sidebar({ side, closeSidebar }) {
 
                         <li className='flex items-center font-medium'>
                             <i className="bi bi-person-plus-fill px-2 py-1 bg-primary text-xl text-white rounded mr-3"></i>
-                            <Link to="/dashboard/counselors" className='text-sm'>Create a Counselor</Link>
+                            <Link to="/dashboard/counselors/create-new-counselor" className='text-sm'>Create a Counselor</Link>
                         </li>
                     </ul>
                 </div>

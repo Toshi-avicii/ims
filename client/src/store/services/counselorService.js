@@ -5,7 +5,6 @@ const counselorService = createApi({
   tagTypes: "counselorData",
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:5000/api/",
-
     prepareHeaders: (headers, { getState }) => {
       const reducerState = getState();
       const token = reducerState?.authReducer?.adminToken;
@@ -38,6 +37,5 @@ const counselorService = createApi({
   },
 });
 
-export const { useGetCounselorsQuery, useGetCounselorsByPageQuery } =
-  counselorService;
+export const { useGetCounselorsQuery, useGetCounselorsByPageQuery } = counselorService;
 export default counselorService;

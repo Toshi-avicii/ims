@@ -44,7 +44,7 @@ const getCounselorsByPage = async(req, res) => {
 }
 
 const addCounselor = async (req, res) => {
-  const { name, email, password } = req.body; 
+  const { name, email, password } = req.body;
   const errors = validationResult(req);
 
   if (errors.isEmpty()) {
@@ -57,6 +57,7 @@ const addCounselor = async (req, res) => {
         email,
         password: hashedPassword,
         role: "counselor",
+        photo: req.file.filename
       });
 
       if (result) {
