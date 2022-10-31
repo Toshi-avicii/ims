@@ -5,6 +5,7 @@ import LeadsTable from '../../components/LeadsTable';
 import Sidebar from '../../components/Sidebar';
 import Pagination from '../../components/Pagination';
 import { useGetLeadsByPageQuery } from '../../store/services/leadService';
+import Loader from '../../components/General/Loader';
 
 function ShowLeads() {
   const [sideBar, setSidebar] = useState('-left-64');
@@ -29,6 +30,7 @@ function ShowLeads() {
   }
 
   useEffect(() => {
+
     if(!isFetching) {
       // console.log(data)
         const leadData = data?.data;
