@@ -4,12 +4,15 @@ import ProfileHeader from '../../components/Profile/ProfileHeader';
 import Sidebar from '../../components/Sidebar';
 import { useSelector } from 'react-redux';
 import jwtDecode from 'jwt-decode';
+import { useGetUserProfileQuery } from '../../store/services/authService'
 
 function Profile() {
   const [sideBar, setSidebar] = useState('-left-64');
   const [userData, setUserData] = useState({
     name: '',
-    email: ''
+    email: '',
+    photo: '',
+    role: '',
   });
 
   const openSidebar = () => {
@@ -24,22 +27,36 @@ function Profile() {
   const decode = jwtDecode(token);
   const userId = decode.id;
 
+  const { data, isFetching } = useGetUserProfileQuery(userId);
+  console.log(data)
   useEffect(() => {
-    const fetchDataByLoginUserId = async () => {
-      try {
-        const req = await fetch(`http://localhost:5000/api/profile/${userId}`, {
-          method: "GET"
-        });
-  
-        const result = await req.json();
-        setUserData(result.data);
-  
-      } catch (err) {
-        console.log(err.message);      
-      }
+    if(!isFetching) {
+      setUserData({
+        name: data.data.name,
+        email: data.data.email,
+        photo: data.data.photo,
+        role: data.data.role
+      });
     }
-    fetchDataByLoginUserId();
-  }, [userId]);
+  },[data, isFetching])
+  
+  // useEffect(() => {
+  //   const fetchDataByLoginUserId = async () => {
+  //     try {
+  //       const req = await fetch(`http://localhost:5000/api/profile/${userId}`, {
+  //         method: "GET"
+  //       });
+  
+  //       const result = await req.json();
+  //       setUserData(result.data);
+  
+  //     } catch (err) {
+  //       console.log(err.message);      
+  //     }
+  //   }
+  //   fetchDataByLoginUserId();
+  // }, [userId]);
+
 
   return (
     <>

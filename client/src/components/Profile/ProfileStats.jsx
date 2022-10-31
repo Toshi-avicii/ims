@@ -1,8 +1,8 @@
 
 function ProfileStats(props) {
   return (
-    <div className="p-1 ml-4 text-2xl w-25"> 
-        <h4 className="text-center">
+    <div className="text-2xl w-25"> 
+        <h4 className="text-center lg:text-justify">
             {props.stat}
             <span className="text-xs block text-gray-700">{props.name}</span>
         </h4>

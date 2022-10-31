@@ -98,8 +98,8 @@ function Sidebar({ side, closeSidebar }) {
                 <Link to="/dashboard/profile">Profile</Link>
             </li>
 
-            <li className='p-3 text-md font-medium cursor-pointer bg-white rounded-md mb-5'>
-                <i className="bi bi-box-arrow-left mr-3 px-2 py-1 bg-primary text-xl text-white rounded" onClick={adminLogout}></i>
+            <li className='p-3 text-md font-medium cursor-pointer bg-white rounded-md mb-5' onClick={adminLogout}>
+                <i className="bi bi-box-arrow-left mr-3 px-2 py-1 bg-primary text-xl text-white rounded"></i>
                 <Link to="/">Logout</Link>
             </li>
         </ul>
