@@ -11,7 +11,7 @@ function ShowCounselors() {
   const [counselors, setCounselors] = useState([]);
   const [paginationData, setPaginationData] = useState({
     perPage: 0,
-    count: 0
+    count: 0,
   });
 
   let { page } = useParams();
@@ -27,9 +27,11 @@ function ShowCounselors() {
   const openSideBar = () => {
     setSideBar("-left-0");
   };
+
   const closeSidebar = () => {
     setSideBar("-left-64");
   };
+
 
   useEffect(() => {
     if (!isFetching) {
@@ -37,19 +39,19 @@ function ShowCounselors() {
       setCounselors(counselorsData);
       setPaginationData({
         perPage: data.perPage,
-        count: data.count
-      })
+        count: data.count,
+      });
     }
   }, [data, isFetching, counselors]);
 
   return (
     <>
       <Sidebar side={sideBar} closeSidebar={closeSidebar} />
-      <AdminNav openSideBar={openSideBar} />
-      <section className="ml-0 sm:ml-64 pt-28 px-4 min-h-screen bg-slate-200">
-        <div className="text-justify rounded-md">
+      <AdminNav openSidebar={openSideBar} />
+      <section className="ml-0 sm:ml-64 sm:pt-5 pt-28 px-4 min-h-screen bg-slate-200">
+        <div className="rounded-md">
           <div className="mb-4">
-            <h1 className="text-2xl font-medium text-gray-600">
+            <h1 className="text-center text-2xl font-medium text-gray-600">
               All Counselors
             </h1>
           </div>
@@ -57,18 +59,24 @@ function ShowCounselors() {
           {counselors && counselors.length > 0 && (
             <div className="">
               <CounselorTable data={counselors} />
-              <CounselorsPagination page={parseInt(page)} perPage={paginationData.perPage} count={paginationData.count} />
+              <CounselorsPagination
+                page={parseInt(page)}
+                perPage={paginationData.perPage}
+                count={paginationData.count}
+              />
             </div>
           )}
 
           {!counselors && (
             <div className="flex justify-center items-center h-[77vh]">
-                <div
+              <div
                 className="flex p-8 mt-[-200px] ml-[-300px]  text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800 w-fit"
                 role="alert"
-                >
-                    <span className="font-bold text-[40px]">No Counselors Found</span>
-                </div>
+              >
+                <span className="font-bold text-[40px]">
+                  No Counselors Found
+                </span>
+              </div>
             </div>
           )}
         </div>

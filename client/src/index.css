@@ -5,3 +5,9 @@
 * {
     font-family: 'poppins', sans-serif;
 }
+
+@layer components {
+    .box {
+        @apply 
+    }
+}
