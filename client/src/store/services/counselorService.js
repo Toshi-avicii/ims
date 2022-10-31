@@ -24,6 +24,7 @@ const counselorService = createApi({
         },
         providesTags: ["counselors"],
       }),
+      
       getCounselorsByPage: builder.query({
         query: (pageNo) => {
           return {
@@ -33,9 +34,20 @@ const counselorService = createApi({
         },
         providesTags: ["counselorData"],
       }),
+
+      addCounselor: builder.mutation({
+        query: (counselorData) => {
+          return {
+            url: 'counselors',
+            method: 'POST',
+            body: counselorData
+          }
+        },
+        invalidatesTags: ['counselorData']
+      })
     };
   },
 });
 
-export const { useGetCounselorsQuery, useGetCounselorsByPageQuery } = counselorService;
+export const { useGetCounselorsQuery, useGetCounselorsByPageQuery,  useAddCounselorMutation } = counselorService;
 export default counselorService;

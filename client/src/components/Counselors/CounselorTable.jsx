@@ -4,7 +4,7 @@ function CounselorTable({ data }) {
 
   return (
     <>
-        <div className="bg-slate-100 shadow-md rounded-md overflow-hidden text-center">
+        <div className="bg-slate-100 shadow-md rounded-md overflow-x-scroll text-center">
             <table className="w-full">
                 <thead>
                     <tr className="border-b border-b-gray-300 bg-white text-center">

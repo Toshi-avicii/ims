@@ -17,7 +17,7 @@ function LeadForm() {
     <>
         <Sidebar side={sideBar} closeSidebar={closeSidebar} />
         <AdminNav openSidebar={openSidebar} />
-        <section className="ml-0 sm:ml-64 bg-slate-200 min-h-screen lg:pt-5 md:pt-[90px] sm:pt-[92px] pt-24">
+        <section className="ml-0 sm:ml-64 bg-slate-200 min-h-screen sm:pt-5 pt-24">
             <div className="text-justify rounded-md flex flex-col items-center p-4">
                 <div className='mb-5'>
                     <h1 className='text-2xl font-medium text-gray-600'>Create A new Lead</h1>

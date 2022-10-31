@@ -37,7 +37,6 @@ const login =  async(req, res) => {
 
 const getLoginUser = async(req, res) => {
     try {
-        console.log(req.params);
         const user = await userModel.findOne({ _id: req.params.userId });
         if(user) {
             res.status(200).json({
