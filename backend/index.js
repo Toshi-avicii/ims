@@ -8,6 +8,7 @@ const counselorsRoute = require('./routes/counselorsRoute');
 const leadsRoute = require('./routes/leadsRoute');
 const adminRoute = require('./routes/adminRoute');
 const path = require('path');
+const profileRoute = require('./routes/profileRoute');
 
 // db connection 
 connect();
@@ -17,6 +18,7 @@ app.use(express.static(path.join(__dirname, 'images/')));
 
 app.use("/api/admin", adminRoute);
 app.use("/api", authRoute);
+app.use("/api/profile", profileRoute)
 app.use("/api/counselors", counselorsRoute);
 app.use("/api/leads", leadsRoute);
 

@@ -47,8 +47,6 @@ function EditModal({
     setModalData({ ...modalData, leadDesc: e.target.value });
   };
 
-  console.log(response);
-
   const updateLeadHandler = (e) => {
     e.preventDefault();
     updateLead({

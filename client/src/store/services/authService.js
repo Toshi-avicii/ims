@@ -16,18 +16,9 @@ const authService = createApi({
           };
         },
       }),
-      getUserProfile: builder.query({
-        query: (userId) => {
-          return {
-            url: `profile/${userId}`,
-            method: "GET",
-          };
-        },
-        providesTags: ['userData']
-      }),
     };
   },
 });
 
-export const { useAuthLoginMutation, useGetUserProfileQuery } = authService;
+export const { useAuthLoginMutation } = authService;
 export default authService;

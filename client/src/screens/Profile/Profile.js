@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import AdminNav from '../../components/AdminNav';
 import ProfileHeader from '../../components/Profile/ProfileHeader';
 import Sidebar from '../../components/Sidebar';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import jwtDecode from 'jwt-decode';
-import { useGetUserProfileQuery } from '../../store/services/authService'
+import { useGetUserProfileQuery } from '../../store/services/profileService'
+import { fetchProfileData } from '../../store/reducers/profileReducer';
 
 function Profile() {
   const [sideBar, setSidebar] = useState('-left-64');
@@ -23,12 +24,17 @@ function Profile() {
     setSidebar('-left-64');
   }
 
-  const token = useSelector(state => state.authReducer.adminToken);
-  const decode = jwtDecode(token);
-  const userId = decode.id;
+  const dispatch = useDispatch();
+  // const userName = useSelector(state => state.profileReducer.name);
+  // const userEmail = useSelector(state => state.profileReducer.email);
+  // const userPhoto = useSelector(state => state.profileReducer.photo);
+  // const userRole = useSelector(state => state.profileReducer.role);
 
-  const { data, isFetching } = useGetUserProfileQuery(userId);
-  console.log(data)
+  const token = useSelector(state => state.authReducer.adminToken);
+  const userDecode = jwtDecode(token);
+
+  const { data, isFetching } = useGetUserProfileQuery(userDecode);
+  
   useEffect(() => {
     if(!isFetching) {
       setUserData({
@@ -37,9 +43,23 @@ function Profile() {
         photo: data.data.photo,
         role: data.data.role
       });
+
+      let profilePic = '';
+      if(data.data.photo.startsWith('http://')) {
+        profilePic = data.data.photo;
+      } else {
+        profilePic = `http://localhost:5000/${data.data.photo}`;
+      }
+
+      dispatch(fetchProfileData({
+        name: data.data.name,
+        email: data.data.email,
+        photo: profilePic,
+        role: data.data.role
+      }))
     }
-  },[data, isFetching])
-  
+  },[data, dispatch, isFetching])
+    
   // useEffect(() => {
   //   const fetchDataByLoginUserId = async () => {
   //     try {
@@ -56,7 +76,6 @@ function Profile() {
   //   }
   //   fetchDataByLoginUserId();
   // }, [userId]);
-
 
   return (
     <>

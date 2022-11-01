@@ -2,8 +2,8 @@ import jwtDecode from "jwt-decode";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { useGetUserProfileQuery } from "../../store/services/authService";
 import TextInput from "../General/TextInput";
+import { useUpdateUserProfileMutation, useGetUserProfileQuery } from "../../store/services/profileService";
 
 function ProfileEditForm() {
   const [userDetail, setUserDetail] = useState({
@@ -27,24 +27,43 @@ function ProfileEditForm() {
   const decode = jwtDecode(token);
   const userId = decode.id;
 
-  const { data, isFetching } = useGetUserProfileQuery(userId);
+  const { data, isFetching } = useGetUserProfileQuery(decode);
+  const [updateProfile, response] = useUpdateUserProfileMutation();
+  console.log(response)
+  
+  const updateHandler = (e) => {
+    e.preventDefault();
+    updateProfile({
+      id: userId,
+      name: userDetail.name,
+      email: userDetail.email,
+      photo: userDetail.photo
+    })
+  }
+
   useEffect(() => {
     if (!isFetching) {
-      setUserDetail({
-        name: data.data.name,
-        email: data.data.email,
-        photo: `http://localhost:5000/${data.data.photo}`,
-      });
+      // console.log(data);
+      if(data) {
+        setUserDetail({
+          name: data.data.name,
+          email: data.data.email,
+          photo: `http://localhost:5000/${data.data.photo}`,
+        });
+        if(!data.data.photo.startsWith('http://')) {
+          setUserImg(`http://localhost:5000/${data.data.photo}`);
+        } else {
+          setUserImg(data.data.photo);
+        }
+      }
 
-      setUserImg(`http://localhost:5000/${data.data.photo}`);
     }
   }, [data, isFetching]);
-  console.log(data);
 
   return (
     <>
       <div className="bg-slate-100 p-5 lg:p-8 w-full lg:w-9/12 md:w-full sm:w-full rounded-md m-auto">
-        <form>
+        <form onSubmit={updateHandler}>
           <div className="">
             <TextInput
               labelText={"Name:"}
@@ -71,7 +90,7 @@ function ProfileEditForm() {
                 <img
                   src={userImg}
                   className="w-[35px] sm:w-[45px] h-[30px] sm:h-[45px]"
-                  alt="user profile pic"
+                  alt="userImg"
                 />
               </div>
               <div>
@@ -90,7 +109,7 @@ function ProfileEditForm() {
                         active:bg-sky-700 focus:outline-none 
                         focus:ring focus:ring-sky-3 
                         w-full p-3 rounded-md mt-4"
-              type={"button"}
+              type="submit"
               value="Submit"
             />
           </div>

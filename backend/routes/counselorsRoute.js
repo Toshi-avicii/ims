@@ -27,12 +27,13 @@ const fileFilter = (req, file, cb) => {
   
 let upload = multer({ storage, fileFilter });
 
-counselorsRoute.get("/", authenticateAdminToken ,getCounselors)
-.post("/", [authenticateAdminToken, upload.single('photo')], counselorValidations, addCounselor)
-.delete("/", authenticateAdminToken ,deleteCounselors)
+counselorsRoute
+.get("/", authenticateLogin ,getCounselors)
+.post("/", [authenticateLogin, upload.single('photo')], counselorValidations, addCounselor)
+.delete("/", authenticateLogin, deleteCounselors)
 .get('/pages/:page', authenticateLogin, getCounselorsByPage);
 
-counselorsRoute.get("/:counselorId", authenticateAdminToken, getOneCounselor)
-.patch("/:counselorId", authenticateAdminToken, updateCounselor)
+counselorsRoute.get("/:counselorId", authenticateLogin, getOneCounselor)
+.patch("/:counselorId", authenticateLogin, updateCounselor)
 
 module.exports = counselorsRoute;

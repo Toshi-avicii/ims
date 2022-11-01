@@ -1,9 +1,11 @@
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import profileImg from '../../Pictures/person-circle.svg';
 import ProfileStats from './ProfileStats';
 
-
 function ProfileHeader({ userData }) {
+  const userImg = useSelector(state => state.profileReducer.photo);
   return (
     <div className="bg-slate-200">
       <div className="bg-black sm:h-50 h-[180px] rounded-t-md"></div>
@@ -13,12 +15,12 @@ function ProfileHeader({ userData }) {
             <div className='w-full'>
             <img
             // userData.photo ? `http://localhost:5000/${userData.photo}` : 
-              src={userData.photo ? `http://localhost:5000/${userData.photo}` : profileImg}
+              src={userImg ? userImg : profileImg}
               alt="profileImage"
               className="block w-full bg-white p-1"
             />
             </div>
-            <button className="w-full py-2 mt-4 text-black border-2 border-black rounded-sm">
+            <button className="w-full py-2 text-black border-2 border-black rounded-sm">
               <Link to='/dashboard/profile/edit-profile'>EDIT PROFILE</Link>
             </button>
           </div>
