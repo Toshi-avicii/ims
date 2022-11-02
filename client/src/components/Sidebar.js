@@ -59,9 +59,13 @@ function Sidebar({ side, closeSidebar }) {
                             <Link to="/dashboard/leads/pages/1">Show All Leads</Link>
                         </li>
 
-                        <li className='flex items-center font-medium'>
+                        <li className='flex items-center font-medium mb-3'>
                             <i className="bi bi-plus px-2 py-1 bg-primary text-xl text-white rounded mr-3"></i>
                             <Link to="/dashboard/leads/create-new-lead">Create Lead</Link>
+                        </li>
+                        <li className='flex items-center font-medium'>
+                            <i className="bi bi-trash-fill px-2 py-1 bg-primary text-xl text-white rounded mr-3"></i>
+                            <Link to="/dashboard/leads/trash/pages/1">Discarded Leads</Link>
                         </li>
                     </ul>
                 </div>

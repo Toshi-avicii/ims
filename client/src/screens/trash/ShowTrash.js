@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import AdminNav from '../../components/AdminNav';
-import LeadsTable from '../../components/LeadsTable';
+import LeadTrashTable from '../../components/LeadTrashTable';
 import Sidebar from '../../components/Sidebar';
 import Pagination from '../../components/Pagination';
-import { useGetLeadsByPageQuery } from '../../store/services/leadService';
+import { useGetLeadsTrashByPageQuery } from '../../store/services/trashService';
 
 function ShowLeads() {
   const [sideBar, setSidebar] = useState('-left-64');
@@ -14,7 +14,7 @@ function ShowLeads() {
     count: 0
   });
   let { page } = useParams();
-  const { data = [], isFetching } = useGetLeadsByPageQuery(page ? page: 1);
+  const { data = [], isFetching } = useGetLeadsTrashByPageQuery(page ? page: 1);
 
   if(!page) {
     page = 1;
@@ -29,7 +29,6 @@ function ShowLeads() {
   }
 
   useEffect(() => {
-
     if(!isFetching) {
         const leadData = data?.data;
         setLeads(leadData); 
@@ -54,7 +53,7 @@ function ShowLeads() {
           {
             leads && leads.length > 0 && 
             <div>
-              <LeadsTable data={leads} />
+              <LeadTrashTable data={leads} />
               <Pagination page={parseInt(page)} perPage={paginationData.perPage} count={paginationData.count}  />
             </div>
           }

@@ -1,10 +1,10 @@
-import AdminNav from "../../components/AdminNav";
-import Sidebar from "../../components/Sidebar";
 import { useEffect, useState } from "react";
-import CounselorTable from "../../components/Counselors/CounselorTable";
 import { useGetCounselorsByPageQuery } from "../../store/services/counselorService";
 import { useParams } from "react-router-dom";
+import CounselorTable from "../../components/Counselors/CounselorTable";
 import CounselorsPagination from "../../components/Counselors/CounselorsPagination";
+import AdminNav from "../../components/AdminNav";
+import Sidebar from "../../components/Sidebar";
 
 function ShowCounselors() {
   const [sideBar, setSideBar] = useState("-left-64");
@@ -24,13 +24,13 @@ function ShowCounselors() {
     page = 1;
   }
 
-  const openSideBar = () => {
+  const openSideBar2 = () => {
     setSideBar("-left-0");
-  };
+  }
 
   const closeSidebar = () => {
     setSideBar("-left-64");
-  };
+  }
 
 
   useEffect(() => {
@@ -47,9 +47,9 @@ function ShowCounselors() {
   return (
     <>
       <Sidebar side={sideBar} closeSidebar={closeSidebar} />
-      <AdminNav openSidebar={openSideBar} />
-      <section className="ml-0 sm:ml-64 sm:pt-5 pt-28 px-4 min-h-screen bg-slate-200">
-        <div className="rounded-md">
+      <AdminNav openSidebar={openSideBar2} />
+      <section className="ml-0 sm:ml-64 pt-28 px-4 min-h-screen bg-slate-200">
+        <div className="text-justify rounded-md">
           <div className="mb-4">
             <h1 className="text-center text-2xl font-medium text-gray-600">
               All Counselors

@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 const leadService = createApi({
     reducerPath: "leads",
-    tagTypes: 'leads',
+    tagTypes: ['leads'],
     baseQuery: fetchBaseQuery({
         baseUrl: 'http://localhost:5000/api/',
         prepareHeaders: function(headers, { getState }) {
@@ -63,10 +63,27 @@ const leadService = createApi({
                         body: leadData
                     }
                 }
+            }),
+
+            sendToTrash: builder.mutation({
+                query: (leadId) => {
+                    return {
+                        url: `/trash/leads/${leadId}`,
+                        method: "POST"
+                    }
+                },
+                invalidatesTags: ['leads']
             })
         }
     }
 });
 
-export const { useGetAllLeadsQuery, useGetLeadsByPageQuery, useUpdateOneLeadMutation, useDeleteOneLeadMutation, useAddLeadsMutation } = leadService;
+export const { 
+    useGetAllLeadsQuery, 
+    useGetLeadsByPageQuery, 
+    useUpdateOneLeadMutation, 
+    useDeleteOneLeadMutation, 
+    useAddLeadsMutation,
+    useSendToTrashMutation 
+} = leadService;
 export default leadService;

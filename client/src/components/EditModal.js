@@ -3,6 +3,7 @@ import { createPortal } from "react-dom";
 import { useNavigate } from "react-router-dom";
 import { useUpdateOneLeadMutation } from "../store/services/leadService";
 import TextInput from "./General/TextInput";
+import { toast, ToastContainer } from 'react-toastify';
 
 function EditModal({
   name,
@@ -64,15 +65,40 @@ function EditModal({
   };
 
   useEffect(() => {
-    if (response.isSuccess) {
-      navigate("/dashboard");
+    if(response.isLoading && response.status === "pending") {
+      toast.loading('Result Pending', {
+        theme: 'colored',
+        toastId: 'update-lead',
+        autoClose: 3000
+      });
     }
-  }, [response.isSuccess, navigate]);
+    if(response.isSuccess) {
+      toast.update('update-lead', {
+        render: "Lead Updated Successfully",
+        type: 'success',
+        isLoading: false,
+        autoClose: 3000,
+        theme: 'colored'
+      });
+
+      navigate('/dashboard');
+    }
+    
+    if(response.isError) {
+      toast.update("update-lead", {
+        render: "Error Occurred",
+        type: 'error',
+        isLoading: false,
+        autoClose: 3000,
+        theme: 'colored'
+      });
+    }
+  }, [response.isSuccess, navigate, response.isError, response.isLoading, response.status]);
 
   return createPortal(
     <div className="fixed top-0 left-0 py-4 w-screen min-h-screen bg-gray-200 items-center z-10">
       <div className="w-screen h-screen flex justify-center items-center overflow-y-auto">
-        <div className="bg-white rounded shadow w-2/5 overflow-y-auto h-screen">
+        <div className="bg-white rounded shadow lg:w-2/5 overflow-y-auto h-screen w-[90%]">
           <div className="border-b-2 border-y-slate-500 p-3 flex justify-between items-center">
             <h2>Edit Lead</h2>
             <button onClick={closeModal} className="bg-gray-300 px-2">
@@ -198,6 +224,7 @@ function EditModal({
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>,
     document.getElementById("portal")
   );
