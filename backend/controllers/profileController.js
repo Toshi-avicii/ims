@@ -24,30 +24,18 @@ const getLoginUser = async(req, res) => {
 }
 
 const updateUser = async(req, res) => {
+  try {
     let result;
-    const { name, email, photo } = req.body; 
     // password is needed to update the data, this route won't update the password.
-    
-    try {
-      
-      const authHeader = req.headers['authorization'];
+      const { id, name, email, photo } = req.body; 
+      console.log(req.body);
   
-      // split the user information from the token
-      const token = authHeader && authHeader.split(' ')[1];
-  
-      // check if the token is null or if the request header is set or not
-      if(token === null || !token) return res.status(401).json({ msg: 'User not authorized' });
-  
-      const tokenPayload = jwt.verify(token, env.JWT_KEY, (err, payload) => {
-        return payload;
-      });
-  
-      const foundedAdmin = await userModel.findOne({ _id: tokenPayload.id });
+      const foundedAdmin = await userModel.findOne({ _id: id });
     //   const correctPassword = await bcrypt.compare(password, foundedAdmin.password);
   
       if(name && foundedAdmin) {
         result = await userModel.findOneAndUpdate(
-          { _id: tokenPayload.id },
+          { _id: id },
           { name },
           { new: true }
         )
@@ -55,19 +43,19 @@ const updateUser = async(req, res) => {
   
       if(email && foundedAdmin) {
         result = await userModel.findOneAndUpdate(
-          { _id: tokenPayload.id },
+          { _id: id },
           { email },
           { new: true }
         )
     }
 
-    //   if(photo && foundedAdmin) {
-    //     result = await userModel.findOneAndUpdate(
-    //       { _id: tokenPayload.id },
-    //         { photo },
-    //         { new: true }
-    //     )
-    // }
+      if(photo && foundedAdmin) {
+        result = await userModel.findOneAndUpdate(
+            { _id: id },
+            { photo },
+            { new: true }
+        )
+      }
     
       if(result) {  
         res.status(200).json({

@@ -30,6 +30,7 @@ const profileService = createApi({
                         url: `edit-profile/${updateProfile.id}`,
                         method: 'PATCH',
                         body: {
+                            id: updateProfile.id,
                             name: updateProfile.name,
                             email: updateProfile.email,
                             photo: updateProfile.photo,

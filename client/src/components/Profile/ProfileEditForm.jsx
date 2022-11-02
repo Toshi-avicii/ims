@@ -10,7 +10,6 @@ function ProfileEditForm() {
     name: "",
     email: "",
     photo: "",
-    role: "",
   });
 
   const [userImg, setUserImg] = useState("");
@@ -20,6 +19,7 @@ function ProfileEditForm() {
   };
 
   const handlePhoto = (e) => {
+    console.log(e.target.files)
     setUserDetail({ ...userDetail, photo: e.target.files[0] });
   };
 
@@ -29,26 +29,37 @@ function ProfileEditForm() {
 
   const { data, isFetching } = useGetUserProfileQuery(decode);
   const [updateProfile, response] = useUpdateUserProfileMutation();
-  console.log(response)
   
   const updateHandler = (e) => {
     e.preventDefault();
+    let formData = new FormData();
+    formData.append('name', userDetail.name);
+    formData.append('email', userDetail.email);
+    formData.append('photo', userDetail.photo);
+    console.log('')
     updateProfile({
       id: userId,
-      name: userDetail.name,
-      email: userDetail.email,
-      photo: userDetail.photo
-    })
+      name: formData.name,
+      email: formData.email,
+      photo: formData.photo
+    });  
+
+    // updateProfile({
+    //   id: userId,
+    //   name: userDetail.name,
+    //   email: userDetail.email,
+    //   photo: userDetail.photo
+    // })
   }
 
   useEffect(() => {
     if (!isFetching) {
+      console.log(response)
       // console.log(data);
       if(data) {
         setUserDetail({
           name: data.data.name,
-          email: data.data.email,
-          photo: `http://localhost:5000/${data.data.photo}`,
+          email: data.data.email
         });
         if(!data.data.photo.startsWith('http://')) {
           setUserImg(`http://localhost:5000/${data.data.photo}`);
@@ -58,7 +69,7 @@ function ProfileEditForm() {
       }
 
     }
-  }, [data, isFetching]);
+  }, [data, isFetching, response]);
 
   return (
     <>
@@ -89,13 +100,13 @@ function ProfileEditForm() {
               <div className="absolute right-1 sm:right-5 bottom-4 sm:bottom-2">
                 <img
                   src={userImg}
-                  className="w-[35px] sm:w-[45px] h-[30px] sm:h-[45px]"
+                  className="w-[35px] sm:w-[45px] h-[30px] sm:h-[45px] rounded-[50%]"
                   alt="userImg"
                 />
               </div>
               <div>
                 <TextInput
-                  labelText={"Image:"}
+                  labelText="Image:"
                   inputType="file"
                   inputName="photo"
                   changeEvent={handlePhoto}
