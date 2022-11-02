@@ -6,6 +6,7 @@
     font-family: 'poppins', sans-serif;
 }
 
+
 /* spinner code */
 
 .lds-facebook {
@@ -45,8 +46,7 @@
         height: 64px;
     }
 
-    50%,
-    100% {
+    50%,100% {
         top: 24px;
         height: 32px;
     }

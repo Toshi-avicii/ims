@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react";
-import { useSendToTrashMutation } from "../store/services/leadService";
-import EditModal from "./EditModal";
+import { useEffect } from "react";
+import { useDeletePermanentlyMutation, useRecoverFromTrashMutation } from "../store/services/trashService";
 import { toast, ToastContainer } from 'react-toastify';
 
-function LeadTableRow({ item, index, day, year, month, hour, minute, dayNum }) {
+function LeadTrashTableRow({ item, index, day, year, month, hour, minute, dayNum }) {
   let days = [
         "Sunday",
         "Monday",
@@ -14,15 +13,11 @@ function LeadTableRow({ item, index, day, year, month, hour, minute, dayNum }) {
         "Saturday"
   ];
 
-  const [openEditModal, setOpenEditModal] = useState(false);
-  const [deleteOneLead, response] = useSendToTrashMutation();
-   
-  const updateHandler = (e) => {
-    setOpenEditModal(true);
-  } 
+  const [deleteOneLead, response] = useDeletePermanentlyMutation();
+  const [recoverOneLead, responseFromMutation] = useRecoverFromTrashMutation();
 
-  const closeModal = (e) => {
-    setOpenEditModal(false);
+  const recoverHandler = (e) => {
+    recoverOneLead(item._id);
   }
 
   const deleteHandler = (e) => {
@@ -39,7 +34,7 @@ function LeadTableRow({ item, index, day, year, month, hour, minute, dayNum }) {
     }
     if(response.isSuccess) {
       toast.update('Delete-Lead', {
-        render: "Lead moved to trash Successfully",
+        render: "Lead Deleted Successfully",
         type: 'success',
         isLoading: false,
         autoClose: 3000
@@ -53,7 +48,40 @@ function LeadTableRow({ item, index, day, year, month, hour, minute, dayNum }) {
         autoClose: 3000
       });
     }
-  }, [response.isSuccess, response.isError, response.isLoading, response.status]);
+
+    if(responseFromMutation.isLoading && responseFromMutation.status === "pending") {
+        toast.loading('Recovering...', {
+          theme: 'light',
+          toastId: 'Recover-Lead',
+          autoClose: 3000
+        });
+      }
+      if(responseFromMutation.isSuccess) {
+        toast.update('Recover-Lead', {
+          render: "Lead Recovered Successfully",
+          type: 'success',
+          isLoading: false,
+          autoClose: 3000
+        });
+      }
+      if(responseFromMutation.isError) {
+        toast.update("Recover-Lead", {
+          render: "Error Occurred",
+          type: 'error',
+          isLoading: false,
+          autoClose: 3000
+        });
+      }
+  }, [
+        response.isSuccess, 
+        response.isError, 
+        response.isLoading, 
+        response.status,
+        responseFromMutation.isSuccess,
+        responseFromMutation.isError,
+        responseFromMutation.isLoading,
+        responseFromMutation.status
+    ]);
 
   return (
     <>
@@ -62,13 +90,13 @@ function LeadTableRow({ item, index, day, year, month, hour, minute, dayNum }) {
         {index + 1}.
       </td>
       <td className="px-5 py-8 text-left whitespace-nowrap text-sm">
-        {item.name}
+        {item.leadName}
       </td>
       <td className="px-5 py-8 text-left whitespace-nowrap text-sm">
-        {item.email}
+        {item.leadEmail}
       </td>
       <td className="px-5 py-8 text-left whitespace-nowrap text-sm">
-        {item.phone}
+        {item.leadPhone}
       </td>
       <td className="px-5 py-8 text-left whitespace-nowrap text-sm">
         {days[day]}, {dayNum}-{month + 1 < 10 ? `0${month}` : month + 1}-{year}
@@ -77,47 +105,47 @@ function LeadTableRow({ item, index, day, year, month, hour, minute, dayNum }) {
         {hour > 11 ? " PM" : " AM"}
       </td>
       <td className="px-5 py-8 text-left whitespace-nowrap text-sm uppercase">
-        {item.course}
+        {item.leadCourse}
       </td>
       <td className="px-5 py-8 text-left whitespace-nowrap text-xs font-medium uppercase">
         <span
           className={`px-4 text-xs py-2 rounded-sm text-white 
             ${
-                item.status === "Pending" &&
+                item.leadStatus === "Pending" &&
                 `bg-yellow-600`
             }
             ${
-                item.status === "Resolved" &&
+                item.leadStatus === "Resolved" &&
                 `bg-emerald-600`
             }
             ${
-                item.status === "Rejected" &&
+                item.leadStatus === "Rejected" &&
                 `bg-rose-700`
             }
             `}
         >
-          {item.status}
+          {item.leadStatus}
         </span>
       </td>
-      <td className="px-5 py-8 text-left text-sm">{item.title}</td>
-      <td className="px-5 py-8 text-left text-sm">{item.description}</td>
-      {item.reference ? (
+      <td className="px-5 py-8 text-left text-sm">{item.leadTitle}</td>
+      <td className="px-5 py-8 text-left text-sm">{item.leadDescription}</td>
+      {item.leadReference ? (
         <td className="px-5 py-8 text-left whitespace-nowrap text-sm">
-          {item.reference.name}, <br />
-          {item.reference.phoneNo}
+          {item.leadReference.name}, <br />
+          {item.leadReference.phoneNo}
         </td>
       ) : (
         <td className="px-5 py-8 text-left whitespace-nowrap text-sm">
           No One
         </td>
       )}
-
+      
       <td className="px-5 py-8 text-left whitespace-nowrap text-sm">
         <button
           className="bg-primary text-white px-6 py-2 rounded"
-          onClick={updateHandler}
+          onClick={recoverHandler}
         >
-          Edit
+          Recover
         </button>
       </td>
       <td className="px-5 py-8 text-left whitespace-nowrap text-sm">
@@ -125,28 +153,13 @@ function LeadTableRow({ item, index, day, year, month, hour, minute, dayNum }) {
           className="bg-red-500 text-white px-6 py-2 rounded"
           onClick={deleteHandler}
         >
-          Move To Trash
+          Delete Permanently
         </button>
         <ToastContainer />
       </td>
     </tr>
-    {
-        openEditModal && 
-            <EditModal  
-                name={item.name}
-                phone={item.phone}
-                email={item.email}
-                course={item.course}
-                status={item.status}
-                title={item.title}
-                desc={item.description}
-                id={item._id}
-                reference={item.reference}
-                closeModal={closeModal}
-            />
-        }
     </>
   );
 }
 
-export default LeadTableRow;
+export default LeadTrashTableRow;

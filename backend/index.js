@@ -8,6 +8,7 @@ const counselorsRoute = require('./routes/counselorsRoute');
 const leadsRoute = require('./routes/leadsRoute');
 const adminRoute = require('./routes/adminRoute');
 const path = require('path');
+const leadsTrashRoute = require('./routes/leadsTrashRoute');
 
 // db connection 
 connect();
@@ -19,6 +20,7 @@ app.use("/api/admin", adminRoute);
 app.use("/api", authRoute);
 app.use("/api/counselors", counselorsRoute);
 app.use("/api/leads", leadsRoute);
+app.use("/api/trash", leadsTrashRoute);
 
 const port = env.PORT || 6000;
 app.listen(port, () => {

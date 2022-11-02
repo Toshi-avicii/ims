@@ -1,10 +1,16 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logout } from '../store/reducers/authReducer';
 
 function Sidebar({ side, closeSidebar }) {
   const [open, setOpen] = useState(false);
   const [openCounselor, setOpenCounselor] = useState(false);
 
+  const dispatch = useDispatch();
+  const adminLogout = (e) => {
+   dispatch(logout());
+  }
   
   const leadsHandler = () => {
     if(open === true) {
@@ -53,9 +59,13 @@ function Sidebar({ side, closeSidebar }) {
                             <Link to="/dashboard/leads/pages/1">Show All Leads</Link>
                         </li>
 
-                        <li className='flex items-center font-medium'>
+                        <li className='flex items-center font-medium mb-3'>
                             <i className="bi bi-plus px-2 py-1 bg-primary text-xl text-white rounded mr-3"></i>
                             <Link to="/dashboard/leads/create-new-lead">Create Lead</Link>
+                        </li>
+                        <li className='flex items-center font-medium'>
+                            <i className="bi bi-trash-fill px-2 py-1 bg-primary text-xl text-white rounded mr-3"></i>
+                            <Link to="/dashboard/leads/trash/pages/1">Discarded Leads</Link>
                         </li>
                     </ul>
                 </div>
@@ -89,12 +99,12 @@ function Sidebar({ side, closeSidebar }) {
         <ul className='px-6 py-2'>
             <li className='p-3 text-md font-medium cursor-pointer bg-white rounded-md mb-5'>
                 <i className="bi bi-person-square mr-3 px-2 py-1 bg-primary text-xl text-white rounded"></i>
-                <Link to="/profile">Profile</Link>
+                <Link to="/dashboard/profile">Profile</Link>
             </li>
 
             <li className='p-3 text-md font-medium cursor-pointer bg-white rounded-md mb-5'>
-                <i className="bi bi-box-arrow-left mr-3 px-2 py-1 bg-primary text-xl text-white rounded"></i>
-                <Link to="/profile">Logout</Link>
+                <i className="bi bi-box-arrow-left mr-3 px-2 py-1 bg-primary text-xl text-white rounded" onClick={adminLogout}></i>
+                <Link to="/">Logout</Link>
             </li>
         </ul>
     </div>

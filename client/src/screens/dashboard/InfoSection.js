@@ -22,7 +22,6 @@ const InfoSection = () => {
     }
     if(!isFetching) {
       let pendingLeadsCount = [];
-      console.log(Array.isArray(data), data);
       if(data.data) {
         pendingLeadsCount = data?.data?.filter(lead => {
           return lead.status === "Pending";
