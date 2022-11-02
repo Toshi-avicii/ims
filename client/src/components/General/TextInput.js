@@ -1,4 +1,4 @@
-function TextInput({ labelText, inputType, inputName, inputPlaceholder, changeEvent, inputValue, width }) {
+function TextInput({ labelText, inputType, inputName, inputPlaceholder, changeEvent, inputValue, width, onFocus }) {
   return (
     <div className={`mb-4 ${width && width}`}>
         <label className="block mb-4">{labelText}</label>
@@ -6,7 +6,7 @@ function TextInput({ labelText, inputType, inputName, inputPlaceholder, changeEv
             type={inputType} 
             name={inputName} 
             placeholder={inputPlaceholder} 
-            className="bg-slate-50 w-full p-4 focus:outline-0 focus-within:bg-slate-100 rounded-lg"
+            className={`bg-slate-50 w-full p-4 focus:outline-0 focus-within:bg-slate-100 rounded-lg ${onFocus && 'focus:outline-1 focus:outline-black'}`}
             onChange={changeEvent}
             value={inputValue} 
         />

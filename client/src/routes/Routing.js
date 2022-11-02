@@ -8,6 +8,7 @@ import LeadForm from '../screens/leads/LeadForm';
 import ShowCounselors  from '../screens/counselors/ShowCounselors';
 import Profile from '../screens/Profile/Profile';
 import CounselorForm from '../screens/counselors/CounselorForm';
+import EditProfile from '../screens/Profile/EditProfile';
 import ShowTrash from '../screens/trash/ShowTrash';
 
 function Routing() {
@@ -18,6 +19,7 @@ function Routing() {
             <Route path='/dashboard'>
               <Route path="" element={<PrivateRoute><Products /></PrivateRoute>} />
               <Route path="profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
+              <Route path="profile/edit-profile" element={<PrivateRoute><EditProfile /></PrivateRoute>} />
               <Route path="leads/create-new-lead" element={<PrivateRoute><LeadForm /></PrivateRoute>} />
               <Route path="leads/pages/:page" element={<PrivateRoute><ShowLeads /></PrivateRoute>} />
               <Route path="leads/trash/pages/:page" element={<PrivateRoute><ShowTrash /></PrivateRoute>} />

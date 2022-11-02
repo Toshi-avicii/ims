@@ -6,6 +6,10 @@ const authenticateLogin = require('../middleWares/authenticateLogin')
 const { counselorValidations } = require('../validations/counselorValidations');
 const upload = require('../middleWares/fileUpload');
 
+counselorsRoute
+.get("/", authenticateLogin ,getCounselors)
+.post("/", [authenticateLogin, upload.single('photo')], counselorValidations, addCounselor)
+.delete("/", authenticateLogin, deleteCounselors)
 // change it from "authenticateLogin" to "authenticateAdminToken"
 counselorsRoute.get("/", authenticateLogin ,getCounselors)
 .post("/", [authenticateLogin, upload.single('photo')], counselorValidations, addCounselor)

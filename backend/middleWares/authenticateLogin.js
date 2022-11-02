@@ -6,7 +6,7 @@ const returnToken = require('../config/returnToken');
 function authenticateLogin(req, res, next) {
     // extract the token from the request authorization header
     const authHeader = req.headers['authorization'];
-
+    // console.log(authHeader)
     // split the user information from the token
     const token = authHeader && authHeader.split(' ')[1];
 
@@ -23,5 +23,20 @@ function authenticateLogin(req, res, next) {
         next();
     });
 }
+
+// function verifyToken(req, res, next) {
+//     const bearerHeader = req.headers['authorization'];
+//     console.log(bearerHeader)
+  
+//     if (bearerHeader) {
+//       const bearer = bearerHeader.split(' ');
+//       const bearerToken = bearer[1];
+//       req.token = bearerToken;
+//       next();
+//     } else {
+//       // Forbidden
+//       res.sendStatus(403);
+//     }
+//   }
 
 module.exports = authenticateLogin;
