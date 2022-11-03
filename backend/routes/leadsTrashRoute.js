@@ -1,10 +1,10 @@
 const express = require('express');
-const { moveToTrash, recoverFromTrash, deletePermanently, getTrashLeadsByPage } = require('../controllers/trashController');
+const { moveToTrash, recoverFromTrash, deletePermanently, getTrashLeadsByPage } = require('../controllers/leadsTrashController');
 const leadsTrashRoute = express.Router();
 
 leadsTrashRoute
+.post('/:leadId', moveToTrash)
 .get('/pages/:page', getTrashLeadsByPage)
-.post('/leads/:leadId', moveToTrash)
-.post('/:leadId', recoverFromTrash)
+.post('/recover/:leadId', recoverFromTrash)
 .delete('/:leadId', deletePermanently)
 module.exports = leadsTrashRoute;

@@ -11,16 +11,16 @@ function ProfileHeader({ userData }) {
       <div className="bg-black sm:h-50 h-[180px] rounded-t-md"></div>
       <div className="flex -mt-[180px] relative justify-between items-center md:items-end flex-col sm:flex-col md:flex-row w-full px-5 sm:px-10 py-8 sm:py-10">
         <div className="flex items-center flex-col md:flex-row p-1">
-          <div className="w-[180px] h-[230px] border-t-2 border-l-2 border-r-2 border-white rounded-md flex flex-col justify-between">
-            <div className='w-full'>
+          <div className="w-[180px] rounded-md flex flex-col justify-between">
+            <div className='w-full h-[200px]'>
             <img
             // userData.photo ? `http://localhost:5000/${userData.photo}` : 
               src={userImg ? userImg : profileImg}
               alt="profileImage"
-              className="block w-full bg-white p-1"
+              className="block bg-white w-full p-1"
             />
             </div>
-            <button className="w-full py-2 text-black border-2 border-black rounded-sm">
+            <button className="w-full py-2 text-lg text-black bg-primary border-2 border-black rounded-sm">
               <Link to='/dashboard/profile/edit-profile'>EDIT PROFILE</Link>
             </button>
           </div>

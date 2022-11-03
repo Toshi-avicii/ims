@@ -19,7 +19,6 @@ function ProfileEditForm() {
   };
 
   const handlePhoto = (e) => {
-    console.log(e.target.files)
     setUserDetail({ ...userDetail, photo: e.target.files[0] });
   };
 
@@ -33,23 +32,17 @@ function ProfileEditForm() {
   const updateHandler = (e) => {
     e.preventDefault();
     let formData = new FormData();
+    formData.append('photo', userDetail.photo);
     formData.append('name', userDetail.name);
     formData.append('email', userDetail.email);
-    formData.append('photo', userDetail.photo);
-    console.log('')
-    updateProfile({
+    let obj = {
       id: userId,
-      name: formData.name,
-      email: formData.email,
-      photo: formData.photo
-    });  
+      name: userDetail.name,
+      email: userDetail.email,
+      photo: userDetail.photo
+    }
 
-    // updateProfile({
-    //   id: userId,
-    //   name: userDetail.name,
-    //   email: userDetail.email,
-    //   photo: userDetail.photo
-    // })
+    updateProfile(formData);
   }
 
   useEffect(() => {
@@ -74,7 +67,7 @@ function ProfileEditForm() {
   return (
     <>
       <div className="bg-slate-100 p-5 lg:p-8 w-full lg:w-9/12 md:w-full sm:w-full rounded-md m-auto">
-        <form onSubmit={updateHandler}>
+        <form onSubmit={updateHandler} encType="multipart/form-data">
           <div className="">
             <TextInput
               labelText={"Name:"}
@@ -100,7 +93,7 @@ function ProfileEditForm() {
               <div className="absolute right-1 sm:right-5 bottom-4 sm:bottom-2">
                 <img
                   src={userImg}
-                  className="w-[35px] sm:w-[45px] h-[30px] sm:h-[45px] rounded-[50%]"
+                  className="w-[35px] sm:w-[45px] h-[30px] sm:h-[30px] rounded-[50%]"
                   alt="userImg"
                 />
               </div>
@@ -110,8 +103,7 @@ function ProfileEditForm() {
                   inputType="file"
                   inputName="photo"
                   changeEvent={handlePhoto}
-                  onFocus={true}
-                  width=""
+                  width="w-full"
                 />
               </div>
             </div>

@@ -12,6 +12,8 @@ function CounselorTable({ data }) {
                         <th className="p-4 font-semibold text-gray-700 text-sm uppercase whitespace-nowrap">Image</th>
                         <th className="p-4 font-semibold text-gray-700 text-sm uppercase whitespace-nowrap">Name</th>
                         <th className="p-4 font-semibold text-gray-700 text-sm uppercase whitespace-nowrap">Email</th>
+                        <th className="p-4 font-semibold text-gray-700 text-sm uppercase whitespace-nowrap">Edit</th>
+                        <th className="p-4 font-semibold text-gray-700 text-sm uppercase whitespace-nowrap">Delete</th>
                     </tr>
                 </thead>
                 <tbody>

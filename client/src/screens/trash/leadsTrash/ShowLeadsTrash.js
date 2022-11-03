@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import AdminNav from '../../components/AdminNav';
-import LeadTrashTable from '../../components/LeadTrashTable';
-import Sidebar from '../../components/Sidebar';
-import Pagination from '../../components/Pagination';
-import { useGetLeadsTrashByPageQuery } from '../../store/services/trashService';
+import AdminNav from '../../../components/AdminNav';
+import LeadTrashTable from '../../../components/LeadTrashTable';
+import Sidebar from '../../../components/Sidebar';
+import Pagination from '../../../components/Pagination';
+import { useGetLeadsTrashByPageQuery } from '../../../store/services/trashService';
 
-function ShowLeads() {
+function ShowTrash() {
   const [sideBar, setSidebar] = useState('-left-64');
   const [leads, setLeads] = useState([]);
   const [paginationData, setPaginationData] = useState({
@@ -69,4 +69,4 @@ function ShowLeads() {
   )
 }
 
-export default ShowLeads
+export default ShowTrash;

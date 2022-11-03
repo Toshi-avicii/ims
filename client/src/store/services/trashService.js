@@ -18,7 +18,7 @@ const trashService = createApi({
             getLeadsTrashByPage: builder.query({
                 query: (pageNo) => {
                     return {
-                        url: `trash/pages/${pageNo}`,
+                        url: `/leads/trash/pages/${pageNo}`,
                         method: 'GET'
                     }
                 },
@@ -28,7 +28,7 @@ const trashService = createApi({
             recoverFromTrash: builder.mutation({
                 query: (leadId) => {
                     return {
-                        url: `trash/${leadId}`,
+                        url: `/leads/trash/recover/${leadId}`,
                         method: "POST"
                     }
                 },
@@ -38,7 +38,7 @@ const trashService = createApi({
             deletePermanently: builder.mutation({
                 query: (leadId) => {
                     return {
-                        url: `trash/${leadId}`,
+                        url: `/leads/trash/${leadId}`,
                         method: 'DELETE'
                     }
                 },
