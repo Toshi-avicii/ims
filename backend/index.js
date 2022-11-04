@@ -12,7 +12,10 @@ const profileRoute = require('./routes/profileRoute');
 const leadsTrashRoute = require('./routes/leadsTrashRoute');
 const counselorsTrashRoute = require('./routes/counselorsTrashRoute')
 
-// db connection d
+// setting time zone
+process.env.TZ = env.TZ;
+// db connection 
+
 connect();
 app.use(cors());
 app.use(express.json());

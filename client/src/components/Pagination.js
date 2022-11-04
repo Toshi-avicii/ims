@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 
 function Pagination({ page, perPage, count }) {
-    console.log(page, perPage,count)
     const totalLinks = Math.ceil(count / perPage);
     let startLoop = page;
     let diff = totalLinks - page;

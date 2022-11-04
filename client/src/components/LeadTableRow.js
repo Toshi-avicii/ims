@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useSendToTrashMutation } from "../store/services/leadService";
 import EditModal from "./EditModal";
 import { toast, ToastContainer } from 'react-toastify';
+import { useGetOneCounselorQuery } from "../store/services/counselorService";
 
 function LeadTableRow({ item, index, day, year, month, hour, minute, dayNum }) {
   let days = [
@@ -14,8 +15,11 @@ function LeadTableRow({ item, index, day, year, month, hour, minute, dayNum }) {
         "Saturday"
   ];
 
+  console.log(item)
+  
   const [openEditModal, setOpenEditModal] = useState(false);
   const [deleteOneLead, response] = useSendToTrashMutation();
+  const { data = {} } = useGetOneCounselorQuery(item.counselor);
    
   const updateHandler = (e) => {
     setOpenEditModal(true);
@@ -103,14 +107,18 @@ function LeadTableRow({ item, index, day, year, month, hour, minute, dayNum }) {
       <td className="px-5 py-8 text-left text-sm">{item.description}</td>
       {item.reference ? (
         <td className="px-5 py-8 text-left whitespace-nowrap text-sm">
-          {item.reference.name}, <br />
-          {item.reference.phoneNo}
+          {item.reference.name === "" ? "No one" : item.reference.name}, <br />
+          {item.reference.phoneNo === "" ? "No number" : item.reference.phoneNo}
         </td>
       ) : (
         <td className="px-5 py-8 text-left whitespace-nowrap text-sm">
           No One
         </td>
       )}
+
+      <td className="px-5 py-8 text-left whitespace-nowrap text-sm">
+        {data.data ? data.data.name : "Not Available"}
+      </td>
 
       <td className="px-5 py-8 text-left whitespace-nowrap text-sm">
         <button

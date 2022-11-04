@@ -1,11 +1,13 @@
+import { useEffect } from "react";
 import { useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
 import { useSendToTrashMutation } from "../../store/services/counselorService";
 import CounselorsEditModal from "./CounselorsEditModal";
 
 function CounselorTableRow({ item, index }) {
 
   const  [openEditModal, setOpenEditModal] = useState(false);
-  const [deleteOneCounselor] = useSendToTrashMutation();
+  const [deleteOneCounselor, response] = useSendToTrashMutation();
 
   const deleteHandler = (e) => {
     deleteOneCounselor(item._id);
@@ -18,6 +20,35 @@ function CounselorTableRow({ item, index }) {
   const closeModal = (e) => {
     setOpenEditModal(false);
   }
+
+  useEffect(() => {
+    if(response.isLoading && response.status === "pending") {
+      toast.loading('Deleting...', {
+        theme: 'light',
+        toastId: 'Delete-Counselor',
+        autoClose: 3000
+      })
+    };
+
+     
+    if(response.isSuccess) {
+      toast.update('Delete-Counselor', {
+        render: "Counselor moved to trash Successfully",
+        type: "success",
+        isLoading: false,
+        autoClose: 3000
+      })
+    };
+
+    if(response.isError) {
+      toast.update("Delete-Counselor", {
+        render: "Error Occurred",
+        type: 'error',
+        isLoading: false,
+        autoClose: 3000
+      });
+    }
+  }, [response.isSuccess, response.isError, response.isLoading, response.status])
   
   return (
     <>
@@ -40,6 +71,7 @@ function CounselorTableRow({ item, index }) {
         </td>
         <td className="px-5 py-8 whitespace-nowrap text-sm">
           <button className="bg-red-500 text-white px-6 py-2 rounded" onClick={deleteHandler}>Move To Trash</button>
+          <ToastContainer />
         </td>
       </tr>
       {
