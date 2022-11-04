@@ -16,7 +16,8 @@ counselorsRoute.get("/", authenticateLogin ,getCounselors)
 .delete("/", authenticateLogin ,deleteCounselors)
 .get('/pages/:page', authenticateLogin, getCounselorsByPage);
 
-counselorsRoute.get("/:counselorId", authenticateLogin, getOneCounselor)
+counselorsRoute
+.get("/:counselorId", authenticateLogin, getOneCounselor)
 .patch("/:counselorId", authenticateLogin, updateCounselor)
 
 module.exports = counselorsRoute;

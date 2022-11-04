@@ -114,7 +114,6 @@ const getOneCounselor = async (req, res) => {
 
 const updateCounselor = async (req, res) => {
   let result;
-
   try {
     if (req.body.name) {
       result = await userModel.findOneAndUpdate(

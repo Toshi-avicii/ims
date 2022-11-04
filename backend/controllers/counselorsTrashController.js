@@ -57,7 +57,61 @@ const getTrashedData = async(req, res) => {
     }
 }
 
+const deletePermanently = async(req, res) => {
+    try {
+        const { counselorId } = req.params;
+        // console.log(counselorId)
+        const deleteCounselor = await counselorTrashModel.findOneAndDelete({ id: counselorId });
+        console.log(deleteCounselor)
+        if(deleteCounselor) {
+            res.status(201).json({
+                msg: "Successfully Deleted"
+            })
+        } else {
+            throw new Error("there is an error to deleted this counselor")
+        }
+    } catch (err) {
+        res.status(401).json({
+            msg: err.message
+        })
+    }
+}
+
+const recoverFromTrash = async(req, res) => {
+    try {
+        const { counselorId } = req.params;
+        const deleteCounselor = await counselorTrashModel.findOne({ _id: counselorId });
+        if(deleteCounselor) {
+            const recoveredCounselor = await userModel.create({
+                _id: deleteCounselor._id,
+                name: deleteCounselor.name,
+                email: deleteCounselor.email,
+                password: deleteCounselor.password,
+                role: deleteCounselor.role,
+                photo: deleteCounselor.photo
+            });
+            
+            if(recoveredCounselor) {
+                await counselorTrashModel.deleteOne({ _id: counselorId });
+                res.status(201).json({
+                    msg: 'counselor recovered',
+                    data: recoveredCounselor
+                })
+            } else {
+                throw new Error('could not recovered counselor')
+            }
+        }
+        
+    } catch (err) {
+        res.status(401).json({
+            msg: err.message
+        })
+    }
+}
+
 module.exports = {
     moveToTrash,
     getTrashedData,
+    deletePermanently,
+    recoverFromTrash,
 }

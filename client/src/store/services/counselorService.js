@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const counselorService = createApi({
   reducerPath: "counselors",
-  tagTypes: "counselorData",
+  tagTypes: "counselors",
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:5000/api/",
     prepareHeaders: (headers, { getState }) => {
@@ -32,7 +32,7 @@ const counselorService = createApi({
             method: "GET",
           };
         },
-        providesTags: ["counselorData"],
+        providesTags: ["counselors"],
       }),
 
       addCounselor: builder.mutation({
@@ -43,7 +43,7 @@ const counselorService = createApi({
             body: counselorData,
           };
         },
-        invalidatesTags: ["counselorData"],
+        invalidatesTags: ["counselors"],
       }),
 
       sendToTrash: builder.mutation({
@@ -55,6 +55,17 @@ const counselorService = createApi({
         },
         invalidatesTags: ["Counselors"]
       }),
+
+      updateCounselor: builder.mutation({
+        query: (counselorData) => {
+          return {
+            url: `counselors/${counselorData.id}`,
+            method: "PATCH",
+            body: counselorData
+          }
+        },
+        invalidatesTags: ['counselors']
+      })
     };
   },
 });
@@ -64,5 +75,6 @@ export const {
   useGetCounselorsByPageQuery,
   useAddCounselorMutation,
   useSendToTrashMutation,
+  useUpdateCounselorMutation
 } = counselorService;
 export default counselorService;

@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 
-function Pagination({ page, perPage, count }) {
-    console.log(page, perPage,count)
+function trashCounselorsPagination({ page, perPage, count }) {
     const totalLinks = Math.ceil(count / perPage);
     let startLoop = page;
     let diff = totalLinks - page;
@@ -18,7 +17,7 @@ function Pagination({ page, perPage, count }) {
             if(i > 0) {
                 allLinks.push(
                     <li key={i} className='px-3 py-1 rounded-sm bg-primary text-white mr-4'>
-                        <Link to={`/dashboard/leads/pages/${i}`}>{i}</Link>
+                        <Link to={`/dashboard/counselors/trash/pages/${i}`}>{i}</Link>
                     </li>
                 )
             }
@@ -30,7 +29,7 @@ function Pagination({ page, perPage, count }) {
     const next = () => {
         if(page < totalLinks) {
             return <li className='px-2 py-1 rounded-sm bg-primary text-white'>
-                <Link to={`/dashboard/leads/pages/${page + 1}`}>
+                <Link to={`/dashboard/counselors/trash/pages/${page + 1}`}>
                     <i className="bi bi-caret-right-fill"></i>
                 </Link></li>
         }
@@ -39,7 +38,7 @@ function Pagination({ page, perPage, count }) {
     const prev = () => {
         if(page > 1) {
             return <li className='px-2 py-1 rounded-sm bg-primary text-white mr-4'>
-                <Link to={`/dashboard/leads/pages/${page - 1}`}>
+                <Link to={`/dashboard/counselors/trash/pages/${page - 1}`}>
                     <i className="bi bi-caret-left-fill"></i>
                 </Link></li>
         }
@@ -54,4 +53,4 @@ function Pagination({ page, perPage, count }) {
   )
 }
 
-export default Pagination
+export default trashCounselorsPagination;

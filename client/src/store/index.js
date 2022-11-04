@@ -26,7 +26,7 @@ const store = configureStore({
         "profileReducer": profileReducer,
     },
     middleware: (getDefaultMiddleware) => {
-        return getDefaultMiddleware().concat([leadService.middleware, counselorService.middleware, trashService.middleware, profileService.middleware])
+        return getDefaultMiddleware().concat([leadService.middleware, counselorService.middleware, trashService.middleware, profileService.middleware, trashCounselorService.middleware])
     }
 });
 

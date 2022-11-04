@@ -51,4 +51,4 @@ function LeadsTable({ data }) {
   )
 }
 
-export default LeadsTable
+export default LeadsTable;

@@ -3,40 +3,47 @@ import { useParams } from "react-router-dom";
 import AdminNav from "../../../components/AdminNav";
 import CounselorsTrashTable from "../../../components/Counselors/CounselorsTrashTable";
 import Sidebar from "../../../components/Sidebar";
-import { useGetTrashedCounselorsQuery } from '../../../store/services/trashCounselorService';
+import { useGetTrashedCounselorsQuery } from "../../../store/services/trashCounselorService";
+import TrashCounselorsPagination from "../../../components/Counselors/TrashCounselorsPagination"
 
 function ShowCounselorsTrash() {
-  const [sideBar, setSidebar] = useState('-left-64');
+  const [sideBar, setSidebar] = useState("-left-64");
   const [trashedCounselor, setTrashedCouselor] = useState([]);
-  // const [paginationData, setPaginationData] = useState({
-  //   perPage: 0,
-  //   count: 0,
-  // });
-  
+  const [paginationData, setPaginationData] = useState({
+    perPage: 0,
+    count: 0,
+  });
+
   let { page } = useParams();
   page = Number(page);
 
-  const { data = [], isFetching } = useGetTrashedCounselorsQuery(page ? page: 1);
+  const { data = [], isFetching } = useGetTrashedCounselorsQuery(
+    page ? page : 1
+  );
 
   useEffect(() => {
-    if(!isFetching) {
+    if (!isFetching) {
       setTrashedCouselor(data.data);
+      setPaginationData({
+        perPage: data.perPage,
+        count: data.count,
+      });
     }
-  }, [data, isFetching])
+  }, [data, isFetching]);
 
-  if(!page) {
+  if (!page) {
     page = 1;
   }
 
   const openSidebar = () => {
-    setSidebar('-left-0');
-  }
+    setSidebar("-left-0");
+  };
 
   const closeSidebar = () => {
-    setSidebar('-left-64');
-  }
+    setSidebar("-left-64");
+  };
 
-    return (
+  return (
     <>
       <Sidebar side={sideBar} closeSidebar={closeSidebar} />
       <AdminNav openSidebar={openSidebar} />
@@ -44,14 +51,21 @@ function ShowCounselorsTrash() {
       <section className="ml-0 sm:ml-64 bg-slate-200 min-h-screen pt-28 px-4">
         <div className="text-justify rounded-md">
           <div className="mb-4">
-            <h1 className="text-2xl font-medium text-gray-600">All Leads</h1>
+            <h1 className="text-2xl font-medium text-gray-600">
+              All Trashed Counselors
+            </h1>
           </div>
           {trashedCounselor && trashedCounselor.length > 0 && (
             <div className="">
-            <CounselorsTrashTable data={trashedCounselor} />
-          </div>
+              <CounselorsTrashTable data={trashedCounselor} />
+              <TrashCounselorsPagination
+                page={parseInt(page)}
+                count={paginationData.count}
+                perPage={paginationData.perPage}
+              />
+            </div>
           )}
-          
+
           {!trashedCounselor && (
             <div className="flex justify-center items-center h-[77vh]">
               <div

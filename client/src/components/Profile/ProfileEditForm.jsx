@@ -40,7 +40,7 @@ function ProfileEditForm() {
       name: userDetail.name,
       email: userDetail.email,
       photo: userDetail.photo
-    }
+    };
 
     updateProfile(formData);
   }
