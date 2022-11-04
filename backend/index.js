@@ -11,6 +11,8 @@ const path = require('path');
 const profileRoute = require('./routes/profileRoute');
 const leadsTrashRoute = require('./routes/leadsTrashRoute');
 
+// setting time zone
+process.env.TZ = env.TZ;
 // db connection 
 connect();
 app.use(cors());

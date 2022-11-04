@@ -1,8 +1,18 @@
+import useGetExcelData from '../hooks/useGetExcelData';
+import ExportReactCSV from './ExportReactCSV';
 import LeadTableRow from './LeadTableRow';
 
 function LeadsTable({ data }) {
+    
+  const dataCsv = useGetExcelData(data);
   return (
-    <div className='bg-slate-100 shadow-md rounded-md overflow-x-scroll'>
+    <div>
+        <div className='mb-4'>
+            {/* add created-by field in the csv file */} 
+            <ExportReactCSV csvData={dataCsv} fileName={"generated-leads.csv"} />
+        </div>
+
+        <div className='bg-slate-100 shadow-md rounded-md overflow-x-scroll'>
         <table>
             <thead>
                 <tr className='border-b border-b-gray-300 bg-white'>
@@ -16,6 +26,7 @@ function LeadsTable({ data }) {
                     <th className='p-5 font-semibold text-gray-700 text-sm uppercase text-left whitespace-nowrap'>Lead Title</th>
                     <th className='p-5 font-semibold text-gray-700 text-sm uppercase text-left whitespace-nowrap'>Lead Description</th>
                     <th className='p-5 font-semibold text-gray-700 text-sm uppercase text-left whitespace-nowrap'>Lead Reference</th>
+                    <th className='p-5 font-semibold text-gray-700 text-sm uppercase text-left whitespace-nowrap'>Created By</th>
                     <th className='p-5 font-semibold text-gray-700 text-sm uppercase text-left whitespace-nowrap'>Edit</th>
                     <th className='p-5 font-semibold text-gray-700 text-sm uppercase text-left whitespace-nowrap'>Delete</th>
                 </tr>
@@ -46,7 +57,8 @@ function LeadsTable({ data }) {
                     )
                 })}
             </tbody>
-      </table> 
+        </table> 
+        </div>
     </div>
   )
 }

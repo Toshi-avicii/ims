@@ -44,10 +44,20 @@ const counselorService = createApi({
           }
         },
         invalidatesTags: ['counselorData']
+      }),
+      
+      getOneCounselor: builder.query({
+        query: (counselorId) => {
+          return {
+            url: `counselors/${counselorId}`,
+            method: "GET"
+          }
+        },
+        providesTags: ['counselorData']
       })
     };
   },
 });
 
-export const { useGetCounselorsQuery, useGetCounselorsByPageQuery,  useAddCounselorMutation } = counselorService;
+export const { useGetCounselorsQuery, useGetCounselorsByPageQuery,  useAddCounselorMutation, useGetOneCounselorQuery } = counselorService;
 export default counselorService;

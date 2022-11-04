@@ -1,7 +1,7 @@
 import AdminNav from "../../components/AdminNav";
 import ProfileEditForm from "../../components/Profile/ProfileEditForm";
 import Sidebar from "../../components/Sidebar";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 function EditProfile() {
   const [sideBar, setSideBar] = useState("-left-64");
