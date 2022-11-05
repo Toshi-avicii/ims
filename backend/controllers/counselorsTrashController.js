@@ -39,7 +39,7 @@ const getTrashedData = async(req, res) => {
         const count = await counselorTrashModel.find().countDocuments();
         const perPage = 5;
         const skip = (page - 1) * perPage;
-        const allTrashedData = await counselorTrashModel.find().skip().limit(perPage);
+        const allTrashedData = await counselorTrashModel.find().skip(skip).limit(perPage);
         if(allTrashedData.length > 0) {
             res.status(200).json({
                 msg: `${allTrashedData} counselor found`,

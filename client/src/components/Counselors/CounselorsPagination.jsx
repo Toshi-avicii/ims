@@ -44,7 +44,7 @@ function CounselorsPagination({ page, perPage, count }) {
     }
 
   return (
-    <ul className="flex w-2/4 m-auto mt-9 justify-center">
+    <ul className="flex w-2/4 m-auto my-9 justify-center">
         {prev()}
         {links()}
         {next()}
