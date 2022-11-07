@@ -1,15 +1,105 @@
-import useGetExcelData from '../hooks/useGetExcelData';
+import { useEffect, useState } from 'react';
+import { useGetAllLeadsQuery } from '../store/services/leadService';
 import ExportReactCSV from './ExportReactCSV';
+import Filters from './Filters';
 import LeadTableRow from './LeadTableRow';
+import { useSelector, useDispatch } from 'react-redux';
+import { resetMonthFilter, resetCounselorFilter, resetStatusFilter } from '../store/reducers/globalReducer';
+// import FilterBtn from './FilterBtn';
 
 function LeadsTable({ data }) {
-    
-  const dataCsv = useGetExcelData(data);
+  const response = useGetAllLeadsQuery();
+  const [allLeads, setAllLeads] = useState([]);
+  const [dataCsv, setDataCsv] = useState([]);
+  const filters = useSelector(state => state.appGlobalReducer.filters);
+  const dispatch = useDispatch();
+ 
+  useEffect(() => {
+    let days = [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday"
+    ];
+    if(!response.isFetching) {
+        setAllLeads(response.data.data);
+    }
+
+    const dataToDownload = allLeads.map((item) => {
+        const creationDate = new Date(item.createdAt);
+        let dayOfCreation = creationDate.toLocaleDateString(undefined, { day: "numeric" });
+        dayOfCreation = Number(dayOfCreation) + 1;
+        
+        let restDate = creationDate.toString().slice(3, 15);
+        let time = creationDate.toString().slice(16, 21);
+
+        return {
+            name: item.name,
+            email: item.email,
+            phone: item.phone,
+            date: `${days[dayOfCreation]}, ${restDate}`,
+            time: `${time}`,
+            course: item.course,
+            status: item.status,
+            title: item.title,
+            description: item.description,
+            referenceName: item.reference.name,
+            referencePhone: item.reference.phoneNo
+        }
+    });
+
+    setDataCsv(dataToDownload);
+
+  }, [response.isFetching, response.data, allLeads])
+
+  const resetCounselor = (e) => {
+    dispatch(resetCounselorFilter());
+  }
+
+  const resetMonth = (e) => {
+    dispatch(resetMonthFilter());
+  }
+
+  const resetStatus = (e) => {
+    dispatch(resetStatusFilter());
+  }
+
   return (
     <div>
-        <div className='mb-4'>
+        <div className='flex items-center'>
+            <p className='mr-4'>Applied Filters: </p>
+            {
+                filters.counselorFilter && <div className='py-2 px-4 bg-gray-800 rounded-full text-white shadow-sm mb-4'>
+                    Counselor: {filters.counselorFilter}
+                    <buttton onClick={resetCounselor} className="ml-2 cursor-pointer bg-white text-black p-2">x</buttton>
+                </div>
+            }
+            {
+                filters.monthFilter && <div className='py-2 px-4 bg-gray-800 rounded-full text-white shadow-sm mb-4 mx-4'>
+                    Month: {filters.monthFilter}
+                    <buttton onClick={resetMonth} className="ml-2 cursor-pointer bg-white text-black p-2">x</buttton>
+                </div>
+            }
+
+            {
+                filters.statusFilter && <div className='py-2 px-4 bg-gray-800 rounded-full text-white shadow-sm mb-4'>
+                    Status: {filters.statusFilter}
+                    <buttton onClick={resetStatus} className="ml-2 cursor-pointer bg-white text-black p-2">x</buttton>
+                </div>
+            }
+        </div>
+        
+        <div className='mb-4 flex'>
             {/* add created-by field in the csv file */} 
-            <ExportReactCSV csvData={dataCsv} fileName={"generated-leads.csv"} />
+            { allLeads.length > 0 &&
+                <ExportReactCSV csvData={dataCsv} fileName={"generated-leads.csv"} />
+            }
+            
+            <Filters />
         </div>
 
         <div className='bg-slate-100 shadow-md rounded-md overflow-x-scroll'>
