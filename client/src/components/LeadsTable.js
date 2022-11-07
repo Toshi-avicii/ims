@@ -5,7 +5,7 @@ import Filters from './Filters';
 import LeadTableRow from './LeadTableRow';
 import { useSelector, useDispatch } from 'react-redux';
 import { resetMonthFilter, resetCounselorFilter, resetStatusFilter } from '../store/reducers/globalReducer';
-// import FilterBtn from './FilterBtn';
+import { XCircleIcon } from '@heroicons/react/24/solid';
 
 function LeadsTable({ data }) {
   const response = useGetAllLeadsQuery();
@@ -73,22 +73,28 @@ function LeadsTable({ data }) {
         <div className='flex items-center'>
             <p className='mr-4'>Applied Filters: </p>
             {
-                filters.counselorFilter && <div className='py-2 px-4 bg-gray-800 rounded-full text-white shadow-sm mb-4'>
+                filters.counselorFilter && <div className='flex justify-center items-center py-2 px-4 bg-gray-800 rounded-full text-white shadow-sm mb-4'>
                     Counselor: {filters.counselorFilter}
-                    <buttton onClick={resetCounselor} className="ml-2 cursor-pointer bg-white text-black p-2">x</buttton>
+                    <button onClick={resetCounselor} className="ml-2 cursor-pointer">
+                        <XCircleIcon className='h-6 w-6 text-white' />
+                    </button>
                 </div>
             }
             {
-                filters.monthFilter && <div className='py-2 px-4 bg-gray-800 rounded-full text-white shadow-sm mb-4 mx-4'>
+                filters.monthFilter && <div className='flex justify-center items-center py-2 px-4 bg-gray-800 rounded-full text-white shadow-sm mb-4 mx-4'>
                     Month: {filters.monthFilter}
-                    <buttton onClick={resetMonth} className="ml-2 cursor-pointer bg-white text-black p-2">x</buttton>
+                    <button onClick={resetMonth} className="ml-2 cursor-pointer">
+                        <XCircleIcon className='h-6 w-6 text-white' />
+                    </button>
                 </div>
             }
 
             {
-                filters.statusFilter && <div className='py-2 px-4 bg-gray-800 rounded-full text-white shadow-sm mb-4'>
+                filters.statusFilter && <div className='flex justify-center items-center py-2 px-4 bg-gray-800 rounded-full text-white shadow-sm mb-4'>
                     Status: {filters.statusFilter}
-                    <buttton onClick={resetStatus} className="ml-2 cursor-pointer bg-white text-black p-2">x</buttton>
+                    <button onClick={resetStatus} className="ml-2 cursor-pointer">
+                        <XCircleIcon className='h-6 w-6 text-white' />
+                    </button>
                 </div>
             }
         </div>
