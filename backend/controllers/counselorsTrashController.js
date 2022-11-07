@@ -62,7 +62,6 @@ const deletePermanently = async(req, res) => {
         const { counselorId } = req.params;
         // console.log(counselorId)
         const deleteCounselor = await counselorTrashModel.findOneAndDelete({ id: counselorId });
-        console.log(deleteCounselor)
         if(deleteCounselor) {
             res.status(201).json({
                 msg: "Successfully Deleted"

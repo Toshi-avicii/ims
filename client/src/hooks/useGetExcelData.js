@@ -28,7 +28,7 @@ const useGetExcelData = (data) => {
 
     useEffect(() => {
         setDataCsv(dataToDownload);
-    }, []);
+    }, [dataToDownload]);
 
     return dataCsv
 }

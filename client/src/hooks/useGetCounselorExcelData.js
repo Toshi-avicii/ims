@@ -1,4 +1,4 @@
-
+ 
 import { useState, useEffect } from 'react';
 
 const useGetCounselorsExcelData = (data) => {
@@ -16,14 +16,14 @@ const useGetCounselorsExcelData = (data) => {
         return {
             name: item.name,
             email: item.email,
-            phone: item.phone,
-            // date: `${dayNum}-${month + 1 < 10 ? `0${month}` : month + 1}-${year}`,
-            // time: `${hour > 11 ? hour - 12 : hour}:${minute < 10 ? `0${minute}` : minute} ${hour > 11 ? "PM" : "AM"}`,
-            // photo: item.photo
+            // phone: item.phone,
+            date: `${dayNum}-${month + 1 < 10 ? `0${month}` : month + 1}-${year}`,
+            time: `${hour > 11 ? hour - 12 : hour}:${minute < 10 ? `0${minute}` : minute} ${hour > 11 ? "PM" : "AM"}`,
+            photo: item.photo
         }
     });
 
-    useEffect(() => {
+    useEffect(() => {       
         setDataCsv(dataToDownload);
     }, []);
 

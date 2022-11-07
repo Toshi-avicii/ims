@@ -14,8 +14,6 @@ function LeadTableRow({ item, index, day, year, month, hour, minute, dayNum }) {
         "Friday",
         "Saturday"
   ];
-
-  console.log(item)
   
   const [openEditModal, setOpenEditModal] = useState(false);
   const [deleteOneLead, response] = useSendToTrashMutation();

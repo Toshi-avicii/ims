@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import TextInput from "./General/TextInput";
 import "react-toastify/dist/ReactToastify.css";
 import { toast, ToastContainer } from "react-toastify";
@@ -13,10 +13,11 @@ function CounselorsAddForm() {
     cPassword: "",
     photo: "",
   });
-  
+
   const [inptFilePhoto, setInptFilePhoto] = useState(inptDefaultImg);
- 
+
   const [postCounselor, response] = useAddCounselorMutation();
+  const inptRef = useRef(null);
 
   const changeCounselor = (e) => {
     setAddCounselor({ ...addCounselor, [e.target.name]: e.target.value });
@@ -24,13 +25,19 @@ function CounselorsAddForm() {
 
   const handlePhoto = (e) => {
     setAddCounselor({ ...addCounselor, photo: e.target.files[0] });
-    if(e.target.files && e.target.files[0]) {
+    if (e.target.files && e.target.files[0]) {
       setInptFilePhoto(URL.createObjectURL(e.target.files[0]));
     } else {
-      console.log('img not set')
+      console.log("img not set");
     }
   };
 
+  //for resetting of  file input
+  const resetFileInpt = () => {
+    inptRef.current.value = null;
+    setInptFilePhoto("");
+    
+  };
 
   const [passAlert, setPassAlert] = useState(false);
   const [cpassAlert, setCpassAlert] = useState(false);
@@ -39,7 +46,6 @@ function CounselorsAddForm() {
 
   const addCounselorHandler = (e) => {
     e.preventDefault();
-
     if (addCounselor.password !== "") {
       if (addCounselor.password.length >= 6) {
         if (addCounselor.cPassword !== "") {
@@ -54,6 +60,13 @@ function CounselorsAddForm() {
             formData.append("password", addCounselor.password);
             formData.append("photo", addCounselor.photo);
             postCounselor(formData);
+            setAddCounselor({
+              name: "",
+              email: "",
+              password: "",
+              cPassword: "",
+              photo: "",
+            });
           } else {
             setCpassAlert(true);
             setCpassLengthAlert(false);
@@ -186,16 +199,24 @@ function CounselorsAddForm() {
               changeEvent={handlePhoto}
               onFocus={true}
               width="w-full"
+              elRef={inptRef}
             />
             <div className="-mr-[75%]">
-             <img src={inptFilePhoto} alt="" width="50" height="50" className="bg-black shadow"/>
-             </div>
+              <img
+                src={inptFilePhoto}
+                alt=""
+                width="50"
+                height="50"
+                className="bg-black shadow"
+              />
+            </div>
           </div>
           <div className="mt-3">
             <input
               type="submit"
               value="Submit"
               className="bg-primary text-xl text-white w-full p-3 rounded cursor-pointer hover:bg-blue-600"
+              onClick={resetFileInpt}
             />
           </div>
         </form>
