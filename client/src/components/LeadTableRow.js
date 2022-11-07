@@ -31,6 +31,11 @@ function LeadTableRow({ item, index, day, year, month, hour, minute, dayNum }) {
     deleteOneLead(item._id);
   }
 
+  const creationDate = new Date(item.createdAt);
+  let dayOfCreation = creationDate.toLocaleDateString(undefined, { day: "numeric" });
+  dayOfCreation = Number(dayOfCreation) + 1;
+  
+  let restDate = creationDate.toString().slice(3, 21);
   useEffect(() => {
     if(response.isLoading && response.status === "pending") {
       toast.loading('Deleting...', {
@@ -73,10 +78,13 @@ function LeadTableRow({ item, index, day, year, month, hour, minute, dayNum }) {
         {item.phone}
       </td>
       <td className="px-5 py-8 text-left whitespace-nowrap text-sm">
-        {days[day]}, {dayNum}-{month + 1 < 10 ? `0${month}` : month + 1}-{year}
+        {/* {days[dayOfCreation]}, {dayNum}-{month + 1 < 10 ? `0${month}` : month + 1}-{year} */}
+        {days[dayOfCreation]}, 
         <br />
-        {hour > 11 ? hour - 12 : hour}:{minute < 10 ? `0${minute}` : minute}
-        {hour > 11 ? " PM" : " AM"}
+        {/* {hour > 11 ? hour - 12 : hour}:{minute < 10 ? `0${minute}` : minute}
+        {hour > 11 ? " PM" : " AM"} */}
+
+      {restDate}
       </td>
       <td className="px-5 py-8 text-left whitespace-nowrap text-sm uppercase">
         {item.course}
