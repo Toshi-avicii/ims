@@ -3,10 +3,9 @@ import { useState, useEffect } from 'react';
 
 const useGetCounselorsExcelData = (data) => {
     const [dataCsv, setDataCsv] = useState([]);
-
-
+    
     const dataToDownload = data.map((item) => {
-        let date = new Date(item.date);
+        let date = new Date(item.createdAt);
         let dayNum = date.getDate();
         let month = date.getMonth();
         let year = date.getFullYear();
