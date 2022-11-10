@@ -7,12 +7,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { resetMonthFilter, resetCounselorFilter, resetStatusFilter } from '../store/reducers/globalReducer';
 import { XCircleIcon } from '@heroicons/react/24/solid';
 
-function LeadsTable({ data }) {
-  const response = useGetAllLeadsQuery();
-  const [allLeads, setAllLeads] = useState([]);
-  const [dataCsv, setDataCsv] = useState([]);
-  const filters = useSelector(state => state.appGlobalReducer.filters);
-  const dispatch = useDispatch();
+function LeadsTable({ data, page }) {
+    const [allLeads, setAllLeads] = useState([]);
+    const [dataCsv, setDataCsv] = useState([]);
+    const filters = useSelector(state => state.appGlobalReducer.filters);
+    const response = useGetAllLeadsQuery();
+    const dispatch = useDispatch();
  
   useEffect(() => {
     let days = [
@@ -70,10 +70,10 @@ function LeadsTable({ data }) {
 
   return (
     <div>
-        <div className='flex items-center'>
+        <div className='flex items-start flex-col lg:flex-row'>
             <p className='mr-4'>Applied Filters: </p>
             {
-                filters.counselorFilter && <div className='flex justify-center items-center py-2 px-4 bg-gray-800 rounded-full text-white shadow-sm mb-4'>
+                filters.counselorFilter && <div className='flex mt-4 lg:mt-0 mr-4 justify-center items-center py-2 px-4 bg-gray-800 rounded-full text-white shadow-sm mb-4'>
                     Counselor: {filters.counselorFilter}
                     <button onClick={resetCounselor} className="ml-2 cursor-pointer">
                         <XCircleIcon className='h-6 w-6 text-white' />
@@ -81,7 +81,7 @@ function LeadsTable({ data }) {
                 </div>
             }
             {
-                filters.monthFilter && <div className='flex justify-center items-center py-2 px-4 bg-gray-800 rounded-full text-white shadow-sm mb-4 mx-4'>
+                filters.monthFilter && <div className='flex justify-center items-center py-2 px-4 bg-gray-800 rounded-full text-white shadow-sm mb-4 lg:mx-4'>
                     Month: {filters.monthFilter}
                     <button onClick={resetMonth} className="ml-2 cursor-pointer">
                         <XCircleIcon className='h-6 w-6 text-white' />
@@ -99,13 +99,12 @@ function LeadsTable({ data }) {
             }
         </div>
         
-        <div className='mb-4 flex'>
+        <div className='mb-4 lg:flex block'>
             {/* add created-by field in the csv file */} 
             { allLeads.length > 0 &&
                 <ExportReactCSV csvData={dataCsv} fileName={"generated-leads.csv"} />
             }
-            
-            <Filters />
+            <Filters page={page} />
         </div>
 
         <div className='bg-slate-100 shadow-md rounded-md overflow-x-scroll'>

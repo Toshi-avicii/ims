@@ -30,7 +30,7 @@ const leadService = createApi({
                 query: () => {
                     return {
                         url: 'leads',
-                        method: 'GET'
+                        method: 'GET',
                     }
                 },
                 providesTags: ['leads']
@@ -73,6 +73,17 @@ const leadService = createApi({
                     }
                 },
                 invalidatesTags: ['leads']
+            }),
+
+            getFilteredLeads: builder.mutation({
+                query: (filters) => {
+                    return {
+                        url: `/leads/filters/pages/${filters.page}`,
+                        method: "POST",
+                        body: filters
+                    }
+                },
+                invalidatesTags: ['leads']
             })
         }
     }
@@ -84,6 +95,7 @@ export const {
     useUpdateOneLeadMutation, 
     useDeleteOneLeadMutation, 
     useAddLeadsMutation,
-    useSendToTrashMutation 
+    useSendToTrashMutation,
+    useGetFilteredLeadsMutation
 } = leadService;
 export default leadService;

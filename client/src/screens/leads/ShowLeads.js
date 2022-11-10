@@ -4,7 +4,7 @@ import AdminNav from '../../components/AdminNav';
 import LeadsTable from '../../components/LeadsTable';
 import Sidebar from '../../components/Sidebar';
 import Pagination from '../../components/Pagination';
-import { useGetLeadsByPageQuery } from '../../store/services/leadService';
+import { useGetFilteredLeadsMutation, useGetLeadsByPageQuery } from '../../store/services/leadService';
 
 function ShowLeads() {
   const [sideBar, setSidebar] = useState('-left-64');
@@ -13,9 +13,10 @@ function ShowLeads() {
     perPage: 0,
     count: 0
   });
+
   let { page } = useParams();
   const { data = [], isFetching } = useGetLeadsByPageQuery(page ? page: 1);
-
+  const [getFilteredData, filteredData] = useGetFilteredLeadsMutation();
   if(!page) {
     page = 1;
   }
@@ -25,11 +26,10 @@ function ShowLeads() {
   }
   
   const closeSidebar = () => {
-      setSidebar('-left-64');
+    setSidebar('-left-64');
   }
-
+  
   useEffect(() => {
-
     if(!isFetching) {
         const leadData = data?.data;
         setLeads(leadData); 
@@ -39,7 +39,6 @@ function ShowLeads() {
         });
     }
   }, [data, isFetching]);
-
 
   return (
     <>
@@ -54,7 +53,7 @@ function ShowLeads() {
           {
             leads && leads.length > 0 && 
             <div>
-              <LeadsTable data={leads} />
+              <LeadsTable data={leads} page={page} />
               <Pagination page={parseInt(page)} perPage={paginationData.perPage} count={paginationData.count}  />
             </div>
           }

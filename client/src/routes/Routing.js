@@ -12,6 +12,7 @@ import EditProfile from '../screens/Profile/EditProfile';
 import ShowTrash from '../screens/trash/ShowTrash';
 
 function Routing() {
+  
   return (
     <BrowserRouter>
         <Routes>
