@@ -9,6 +9,7 @@ import globalReducer from "./reducers/globalReducer";
 import profileService from "./services/profileService";
 import profileReducer from "./reducers/profileReducer";
 import trashService from "./services/trashService";
+import trashCounselorService from "./services/trashCounselorService";
 
 const store = configureStore({
     reducer: {
@@ -17,6 +18,7 @@ const store = configureStore({
         [counselorService.reducerPath]: counselorService.reducer,
         [profileService.reducerPath]: profileService.reducer,
         [trashService.reducerPath]: trashService.reducer,
+        [trashCounselorService.reducerPath]: trashCounselorService.reducer,
         "authReducer": authReducer,
         "leadReducer": leadReducer,
         "counselorReducer": counselorReducer,
@@ -24,7 +26,7 @@ const store = configureStore({
         "profileReducer": profileReducer,
     },
     middleware: (getDefaultMiddleware) => {
-        return getDefaultMiddleware().concat([leadService.middleware, counselorService.middleware, trashService.middleware, profileService.middleware])
+        return getDefaultMiddleware().concat([leadService.middleware, counselorService.middleware, trashService.middleware, profileService.middleware, trashCounselorService.middleware])
     }
 });
 

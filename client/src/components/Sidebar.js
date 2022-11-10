@@ -80,14 +80,18 @@ function Sidebar({ side, closeSidebar }) {
             {openCounselor && 
                 <div className='w-full bg-white items-center p-3 mb-5 rounded-b-md'>
                     <ul>
-                        <li className='flex mb-3 items-center font-medium'>
+                        <li className='flex mb-3 items-center -mt-3 font-medium'>
                             <i className="bi bi-layers-fill px-2 py-1 bg-primary text-xl text-white rounded mr-3"></i>
                             <Link to="/dashboard/counselors/pages/1" className='text-sm'>Show All Counselors</Link>
                         </li>
 
-                        <li className='flex items-center font-medium'>
+                        <li className='flex items-center font-medium mb-3'>
                             <i className="bi bi-person-plus-fill px-2 py-1 bg-primary text-xl text-white rounded mr-3"></i>
                             <Link to="/dashboard/counselors/create-new-counselor" className='text-sm'>Create a Counselor</Link>
+                        </li>
+                        <li className='flex items-center font-medium'>
+                            <i className="bi bi-trash-fill px-2 py-1 bg-primary text-xl text-white rounded mr-3"></i>
+                            <Link to="/dashboard/counselors/trash/pages/1">Discarded Counselors</Link>
                         </li>
                     </ul>
                 </div>

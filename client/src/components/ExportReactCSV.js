@@ -5,7 +5,7 @@ function ExportReactCSV({ csvData, fileName }) {
   // console.log(csvData);
   return (
     <div>
-        <button className='bg-primary text-white rounded-sm shadow-md py-2 px-6 hover:bg-green-600 transition-all'>
+        <button className='bg-primary text-white rounded-sm shadow-md py-2 px-8 hover:bg-green-600 transition-all'>
             <CSVLink data={csvData} filename={fileName} className="flex justify-center items-center">
                 <span className='ml-1'>Export</span>
             </CSVLink>

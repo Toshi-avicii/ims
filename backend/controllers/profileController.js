@@ -28,7 +28,7 @@ const updateUser = async(req, res) => {
     let result;
     // password is needed to update the data, this route won't update the password.
       const { id, name, email, photo } = req.body; 
-      console.log(req.body);
+      console.log(req.body, req.file);
   
       const foundedAdmin = await userModel.findOne({ _id: id });
     //   const correctPassword = await bcrypt.compare(password, foundedAdmin.password);
@@ -49,10 +49,10 @@ const updateUser = async(req, res) => {
         )
     }
 
-      if(photo && foundedAdmin) {
+      if(foundedAdmin) {
         result = await userModel.findOneAndUpdate(
             { _id: id },
-            { photo },
+            { photo: req.file.filename },
             { new: true }
         )
       }

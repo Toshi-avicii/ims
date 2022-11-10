@@ -68,7 +68,7 @@ const leadService = createApi({
             sendToTrash: builder.mutation({
                 query: (leadId) => {
                     return {
-                        url: `/trash/leads/${leadId}`,
+                        url: `/leads/trash/${leadId}`,
                         method: "POST"
                     }
                 },

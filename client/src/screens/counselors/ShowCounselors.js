@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useGetCounselorsByPageQuery } from "../../store/services/counselorService";
+import { useGetCounselorsByPageQuery, useGetCounselorsQuery } from "../../store/services/counselorService";
 import { useParams } from "react-router-dom";
 import CounselorTable from "../../components/Counselors/CounselorTable";
 import CounselorsPagination from "../../components/Counselors/CounselorsPagination";
@@ -20,8 +20,23 @@ function ShowCounselors() {
     page ? page : 1
   );
 
+  let [allData, setAllData] = useState([]);
+
+  const response = useGetCounselorsQuery();
+
+  // for all data download of counselors csv file 
+  useEffect(() => {
+    if(!response.isFetching && response.isSuccess) {
+      setAllData(response.data.counselors);
+    } 
+
+    if(!response.isFetching && response.isError) {
+      console.error('Error occurred');
+    }
+  }, [response.data, response.isSuccess, response.isError, response.isFetching]);
+
   if (!page) {
-    page = 1;
+    page = 1; 
   }
 
   const openSideBar2 = () => {
@@ -58,7 +73,7 @@ function ShowCounselors() {
 
           {counselors && counselors.length > 0 && (
             <div className="">
-              <CounselorTable data={counselors} />
+              <CounselorTable data={counselors} allCounselorsData={allData} />
               <CounselorsPagination
                 page={parseInt(page)}
                 perPage={paginationData.perPage}
