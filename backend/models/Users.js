@@ -23,6 +23,8 @@ const userSchema = mongoose.Schema({
         type: String,
         default: 'user-default.png'
     }
+}, {
+    timestamps: true
 });
 
 const userModel = mongoose.model("User", userSchema);

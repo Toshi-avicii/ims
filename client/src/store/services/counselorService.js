@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const counselorService = createApi({
   reducerPath: "counselors",
-  tagTypes: "counselorData",
+  tagTypes: "counselors",
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:5000/api/",
     prepareHeaders: (headers, { getState }) => {
@@ -24,7 +24,16 @@ const counselorService = createApi({
         },
         providesTags: ["counselors"],
       }),
-      
+
+      getOneCounselor: builder.query({
+        query: (counselorId) => {
+          return {
+            url: `counselor/${counselorId}`,
+          method: 'GET'
+          }
+        } 
+      }),
+
       getCounselorsByPage: builder.query({
         query: (pageNo) => {
           return {
@@ -32,32 +41,50 @@ const counselorService = createApi({
             method: "GET",
           };
         },
-        providesTags: ["counselorData"],
+        providesTags: ["counselors"],
       }),
 
       addCounselor: builder.mutation({
         query: (counselorData) => {
           return {
-            url: 'counselors',
-            method: 'POST',
-            body: counselorData
-          }
+            url: "counselors",
+            method: "POST",
+            body: counselorData,
+          };
         },
-        invalidatesTags: ['counselorData']
+        invalidatesTags: ["counselors"],
       }),
-      
-      getOneCounselor: builder.query({
+
+      sendToTrash: builder.mutation({
         query: (counselorId) => {
           return {
-            url: `counselors/${counselorId}`,
-            method: "GET"
-          }
+            url: `counselors/trash/${counselorId}`,
+            method: "POST",
+          };
         },
-        providesTags: ['counselorData']
-      })
+        invalidatesTags: ["counselors"],
+      }),
+
+      updateCounselor: builder.mutation({
+        query: (counselorData) => {
+          return {
+            url: `counselors/${counselorData.id}`,
+            method: "PATCH",
+            body: counselorData,
+          };
+        },
+        invalidatesTags: ["counselors"],
+      }),
     };
   },
 });
 
-export const { useGetCounselorsQuery, useGetCounselorsByPageQuery,  useAddCounselorMutation, useGetOneCounselorQuery } = counselorService;
+export const {
+  useGetCounselorsQuery,
+  useGetOneCounselorQuery,
+  useGetCounselorsByPageQuery,
+  useAddCounselorMutation,
+  useUpdateCounselorMutation,
+  useSendToTrashMutation,
+} = counselorService;
 export default counselorService;

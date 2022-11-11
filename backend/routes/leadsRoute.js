@@ -8,7 +8,7 @@ leadsRoute
 .post("/", authenticateLogin ,addLead)
 .get("/", authenticateLogin, getLeads)
 .post("/filters/pages/:page", getFilteredLeads)
-.get('/pages/:page', authenticateLogin, getLeadsByPage)
+.get('/pages/:page?', authenticateLogin, getLeadsByPage)
 .get("/:leadId", authenticateLogin ,getLeadById)
 .patch("/:leadId", authenticateLogin ,updateOneLead)
 .delete("/:leadId", authenticateLogin ,deleteOneLead)

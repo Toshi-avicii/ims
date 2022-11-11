@@ -103,6 +103,7 @@ const getTrashLeadsByPage = async (req, res) => {
     try {
       //for pagination...
       const { page } = req.params;
+      console.log(page)
       const count = await leadTrashModel.find().countDocuments();
       const perPage = 5;
       const skip = (page - 1) * perPage;

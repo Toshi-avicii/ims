@@ -158,7 +158,7 @@ function LeadTableRow({ item, index, day, year, month, hour, minute, dayNum }) {
                 reference={item.reference}
                 closeModal={closeModal}
             />
-        }
+    }
     </>
   );
 }

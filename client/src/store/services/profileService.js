@@ -5,7 +5,7 @@ const profileService = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: 'http://localhost:5000/api/profile/',
         prepareHeaders: function(headers, { getState }) {
-            const reducers = getState();
+           const reducers = getState();
            const token = reducers?.authReducer?.adminToken;
            // authorization bearer token
            headers.set('authorization', token ? `Bearer: ${token}` : '');
@@ -33,7 +33,7 @@ const profileService = createApi({
                             id: updateProfile.id,
                             name: updateProfile.name,
                             email: updateProfile.email,
-                            photo: updateProfile.photo,
+                            photo: updateProfile.photo
                         }
                     }
                 },

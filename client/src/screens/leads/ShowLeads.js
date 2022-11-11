@@ -4,7 +4,9 @@ import AdminNav from '../../components/AdminNav';
 import LeadsTable from '../../components/LeadsTable';
 import Sidebar from '../../components/Sidebar';
 import Pagination from '../../components/Pagination';
-import { useGetFilteredLeadsMutation, useGetLeadsByPageQuery } from '../../store/services/leadService';
+import { useGetLeadsByPageQuery } from '../../store/services/leadService';
+import { useSelector } from 'react-redux';
+import Filters from '../../components/Filters';
 
 function ShowLeads() {
   const [sideBar, setSidebar] = useState('-left-64');
@@ -14,12 +16,18 @@ function ShowLeads() {
     count: 0
   });
 
+  const filterData = useSelector(state => state.appGlobalReducer.filters);
+
   let { page } = useParams();
-  const { data = [], isFetching } = useGetLeadsByPageQuery(page ? page: 1);
-  const [getFilteredData, filteredData] = useGetFilteredLeadsMutation();
   if(!page) {
     page = 1;
   }
+  const { data = [], isFetching } = useGetLeadsByPageQuery({
+    month: filterData.monthFilter,
+    status: filterData.statusFilter,
+    counselor: filterData.counselorFilter,
+    page
+  });
 
   const openSidebar = () => {
     setSidebar('-left-0');
@@ -28,9 +36,10 @@ function ShowLeads() {
   const closeSidebar = () => {
     setSidebar('-left-64');
   }
-  
+
   useEffect(() => {
     if(!isFetching) {
+      console.log(data);
         const leadData = data?.data;
         setLeads(leadData); 
         setPaginationData({
@@ -38,7 +47,7 @@ function ShowLeads() {
           count: data.count
         });
     }
-  }, [data, isFetching]);
+  }, [isFetching, data]);
 
   return (
     <>
@@ -50,6 +59,7 @@ function ShowLeads() {
           <div className='mb-4'>
                 <h1 className='text-2xl font-medium text-gray-600'>All Leads</h1>
           </div>
+          <Filters page={page} />
           {
             leads && leads.length > 0 && 
             <div>
@@ -60,8 +70,14 @@ function ShowLeads() {
 
           {
             !leads && <div>
-              <p className=''>No leads Found</p>
+              <p className='mt-6'>No leads Found</p>
             </div>
+          }
+          {
+            leads && leads.length === 0 && 
+              <div className='mt-6'>
+                <p>No leads found</p>
+              </div>
           }
         </div>
       </section>

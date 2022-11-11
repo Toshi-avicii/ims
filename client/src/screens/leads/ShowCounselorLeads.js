@@ -1,35 +1,41 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import AdminNav from '../../components/AdminNav';
-import LeadTrashTable from '../../components/LeadTrashTable';
+import LeadsTable from '../../components/LeadsTable';
 import Sidebar from '../../components/Sidebar';
 import Pagination from '../../components/Pagination';
-import { useGetLeadsTrashByPageQuery } from '../../store/services/trashService';
+import { useGetLeadsByOneCounselorQuery } from '../../store/services/leadService';
+import { useSelector } from 'react-redux';
+import jwtDecode from 'jwt-decode';
 
-function ShowTrash() {
+function ShowCounselorLeads() {
   const [sideBar, setSidebar] = useState('-left-64');
   const [leads, setLeads] = useState([]);
   const [paginationData, setPaginationData] = useState({
     perPage: 0,
     count: 0
   });
-  let { page } = useParams();
-  const { data = [], isFetching } = useGetLeadsTrashByPageQuery(page ? page: 1);
 
+  const token = useSelector(state => state.authReducer.adminToken);
+  const decodeToken = jwtDecode(token);
+
+  let { page } = useParams();
   if(!page) {
     page = 1;
   }
+  const { data = [], isFetching } = useGetLeadsByOneCounselorQuery(decodeToken.id);
 
   const openSidebar = () => {
     setSidebar('-left-0');
   }
   
   const closeSidebar = () => {
-      setSidebar('-left-64');
+    setSidebar('-left-64');
   }
 
   useEffect(() => {
     if(!isFetching) {
+      console.log(data);
         const leadData = data?.data;
         setLeads(leadData); 
         setPaginationData({
@@ -37,8 +43,7 @@ function ShowTrash() {
           count: data.count
         });
     }
-  }, [data, isFetching]);
-
+  }, [isFetching, data]);
 
   return (
     <>
@@ -53,15 +58,21 @@ function ShowTrash() {
           {
             leads && leads.length > 0 && 
             <div>
-              <LeadTrashTable data={leads} />
+              <LeadsTable data={leads} page={page} />
               <Pagination page={parseInt(page)} perPage={paginationData.perPage} count={paginationData.count}  />
             </div>
           }
 
           {
             !leads && <div>
-              <p className=''>No leads Found</p>
+              <p className='mt-6'>No leads Found</p>
             </div>
+          }
+          {
+            leads && leads.length === 0 && 
+              <div className='mt-6'>
+                <p>No leads found</p>
+              </div>
           }
         </div>
       </section>
@@ -69,4 +80,4 @@ function ShowTrash() {
   )
 }
 
-export default ShowTrash
+export default ShowCounselorLeads

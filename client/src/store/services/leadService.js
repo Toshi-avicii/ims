@@ -36,10 +36,11 @@ const leadService = createApi({
                 providesTags: ['leads']
             }),
             getLeadsByPage: builder.query({
-                query: (pageNo) => {
+                query: (filteredData) => {
                     return {
-                        url: `leads/pages/${pageNo}`,
-                        method: 'GET'
+                        url: `leads/pages/${filteredData.page}`,
+                        method: 'GET',
+                        params: filteredData
                     }
                 },
                 providesTags: ['leads']
@@ -62,13 +63,14 @@ const leadService = createApi({
                         method: "POST",
                         body: leadData
                     }
-                }
+                },
+                invalidatesTags: ['leads']
             }),
 
             sendToTrash: builder.mutation({
                 query: (leadId) => {
                     return {
-                        url: `/trash/leads/${leadId}`,
+                        url: `/leads/trash/${leadId}`,
                         method: "POST"
                     }
                 },
@@ -84,6 +86,16 @@ const leadService = createApi({
                     }
                 },
                 invalidatesTags: ['leads']
+            }),
+            
+            getLeadsByOneCounselor: builder.query({
+                query: (counselorId) => {
+                    return {
+                        url: `/leads/counselors/${counselorId}`,
+                        method: "GET"
+                    }
+                },
+                providesTags: ['leads']
             })
         }
     }
@@ -91,11 +103,12 @@ const leadService = createApi({
 
 export const { 
     useGetAllLeadsQuery, 
-    useGetLeadsByPageQuery, 
+    useGetLeadsByPageQuery,
     useUpdateOneLeadMutation, 
     useDeleteOneLeadMutation, 
     useAddLeadsMutation,
     useSendToTrashMutation,
-    useGetFilteredLeadsMutation
+    useGetFilteredLeadsMutation,
+    useGetLeadsByOneCounselorQuery
 } = leadService;
 export default leadService;

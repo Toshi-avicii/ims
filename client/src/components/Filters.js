@@ -76,8 +76,8 @@ function Filters({ page }) {
 
   return (
     <div className='flex lg:flex-col items-stretch lg:justify-center lg:items-center'>
-        <form className='flex flex-col lg:flex-row lg:justify-center lg:items-center w-full' onSubmit={filterHandler}>
-            <div className='bg-slate-100 p-0 rounded shadow-sm flex justify-center items-center md:ml-2'>
+        <form className='flex flex-col lg:flex-row lg:justify-start lg:items-center w-full' onSubmit={filterHandler}>
+            <div className='bg-slate-100 p-0 rounded shadow-sm flex justify-center items-center'>
                 <div className='sm:p-0 my-3 lg:my-0'>
                     <input type="month" className='px-4 py-2 bg-transparent' name="month" value={filterData.month} onChange={changeEvent} />
                 </div>
@@ -93,7 +93,7 @@ function Filters({ page }) {
                         onChange={changeEvent}
                     >
                         <option value="" disabled>Status</option>
-                        <option value="all">All</option>
+                        <option value="">All</option>
                         <option value="Pending">Pending</option>
                         <option value="Resolved">Resolved</option>
                         <option value="Rejected">Rejected</option>
@@ -110,8 +110,8 @@ function Filters({ page }) {
                         value={filterData.counselor}
                         onChange={changeEvent}
                     >
-                        <option value="">Counselor</option>
-                        <option value="all">All</option>
+                        <option value="" disabled>Counselor</option>
+                        <option value="">All</option>
                         {counselors.map((item, index) => {
                             return (
                                 <option value={item.name} key={index}>{item.name}</option>

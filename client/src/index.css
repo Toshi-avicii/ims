@@ -6,6 +6,16 @@
     font-family: 'poppins', sans-serif;
 }
 
+body {
+    background-color: #e2e8f0;
+}
+
+.profile-bg {
+    background: linear-gradient(310deg, rgba(33, 82, 255, 0.6), rgba(33, 212, 253, 0.6)), url('./Pictures/curved0.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50% center;
+}
 
 /* spinner code */
 
