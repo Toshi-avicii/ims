@@ -34,6 +34,7 @@ function AdminLogin() {
   }
 
   useEffect(() => {
+    document.title = 'Sign In | Edlyf - Inquiry Management System';
     if(response.isSuccess) {
       localStorage.setItem('admin-token', response?.data?.token);
       dispatch(setAdminToken(response?.data?.token));   

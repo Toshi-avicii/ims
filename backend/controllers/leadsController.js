@@ -229,7 +229,6 @@ const getLeadsByPage = async (req, res) => {
     const { page } = req.params;
     const perPage = 5;
     const skip = (page - 1) * perPage;
-    console.log(req.query);
     
     // 1. when month, status and counselor name is passed in filter body
     if(month !== '' && status !== '' && counselor !== '') {

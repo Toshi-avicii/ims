@@ -22,6 +22,7 @@ function ShowCounselorsTrash() {
   );
 
   useEffect(() => {
+    document.title = 'Discarded Counselors | Edlyf - Inquiry Management System';
     if (!isFetching) {
       setTrashedCouselor(data.data);
       setPaginationData({

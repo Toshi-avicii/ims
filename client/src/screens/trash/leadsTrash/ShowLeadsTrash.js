@@ -29,6 +29,7 @@ function ShowTrash() {
   }
 
   useEffect(() => {
+    document.title = 'Discarded Leads | Edlyf - Inquiry Management System';
     if(!isFetching) {
         const leadData = data?.data;
         setLeads(leadData); 

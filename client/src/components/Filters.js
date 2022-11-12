@@ -72,8 +72,6 @@ function Filters({ page }) {
         }
     }, [response, filterData]);
 
-    console.log(filteredResponse);
-
   return (
     <div className='flex lg:flex-col items-stretch lg:justify-center lg:items-center'>
         <form className='flex flex-col lg:flex-row lg:justify-start lg:items-center w-full' onSubmit={filterHandler}>

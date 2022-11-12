@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Sidebar from "../../components/Sidebar";
 import AdminNav from "../../components/AdminNav";
 import CounselorsAddForm from "../../components/CounselorsAddForm";
@@ -12,6 +12,10 @@ function LeadForm() {
     const closeSidebar = () => {
         setSidebar('-left-64');
     }
+
+    useEffect(() => {
+        document.title = 'Add New Counselor | Edlyf - Inquiry Management System';
+    }, [])
   
   return (
     <>

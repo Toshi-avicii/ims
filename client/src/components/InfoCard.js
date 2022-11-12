@@ -8,7 +8,7 @@ function InfoCard(props) {
             <p className='font-medium text-2xl'>{props.stat}</p>
         </div>
         <div className='h-full flex justify-center items-center'>
-            <i className={`${props.iconClass} px-2 py-1 bg-primary text-xl text-white rounded`}></i>
+            <i className={`${props.iconClass} px-2 py-1 bg-primary-gradient text-xl text-white rounded`}></i>
         </div>
     </div>
   )

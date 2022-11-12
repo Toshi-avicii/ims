@@ -36,6 +36,7 @@ function Profile() {
   const { data, isFetching } = useGetUserProfileQuery(userDecode);
   
   useEffect(() => {
+    document.title = 'Profile | Edlyf - Inquiry Management System';
     if(!isFetching) {
       setUserData({
         name: data.data.name,
@@ -60,23 +61,6 @@ function Profile() {
     }
   },[data, dispatch, isFetching])
     
-  // useEffect(() => {
-  //   const fetchDataByLoginUserId = async () => {
-  //     try {
-  //       const req = await fetch(`http://localhost:5000/api/profile/${userId}`, {
-  //         method: "GET"
-  //       });
-  
-  //       const result = await req.json();
-  //       setUserData(result.data);
-  
-  //     } catch (err) {
-  //       console.log(err.message);      
-  //     }
-  //   }
-  //   fetchDataByLoginUserId();
-  // }, [userId]);
-
   return (
     <>
       <div className=''>

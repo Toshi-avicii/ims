@@ -16,7 +16,7 @@ function ShowCounselors() {
 
   let { page } = useParams();
   page = Number(page);
-  const { data = [], isFetching } = useGetCounselorsByPageQuery(
+  const { data = [], isFetching, isSuccess } = useGetCounselorsByPageQuery(
     page ? page : 1
   );
 
@@ -26,6 +26,7 @@ function ShowCounselors() {
 
   // for all data download of counselors csv file 
   useEffect(() => {
+    document.title = 'All Counselors | Edlyf - Inquiry Management System';
     if(!response.isFetching && response.isSuccess) {
       setAllData(response.data.counselors);
     } 
@@ -33,7 +34,16 @@ function ShowCounselors() {
     if(!response.isFetching && response.isError) {
       console.error('Error occurred');
     }
-  }, [response.data, response.isSuccess, response.isError, response.isFetching]);
+
+    if (!isFetching && isSuccess) {
+      let counselorsData = data?.data;
+      setCounselors(counselorsData);
+      setPaginationData({
+        perPage: data.perPage,
+        count: data.count,
+      });
+    }
+  }, [response, data, isFetching, isSuccess]);
 
   if (!page) {
     page = 1; 
@@ -46,18 +56,6 @@ function ShowCounselors() {
   const closeSidebar = () => {
     setSideBar("-left-64");
   }
-
-
-  useEffect(() => {
-    if (!isFetching) {
-      let counselorsData = data?.data;
-      setCounselors(counselorsData);
-      setPaginationData({
-        perPage: data.perPage,
-        count: data.count,
-      });
-    }
-  }, [data, isFetching, counselors]);
 
   return (
     <>

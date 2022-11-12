@@ -20,7 +20,7 @@ function ProfileHeader({ userData }) {
               className="block bg-white w-full p-1 shadow-md rounded-md"
             />
             </div>
-            <button className="border border-transparent transition-all w-full py-2 text-lg text-white shadow-md bg-primary rounded-sm hover:bg-white hover:text-primary hover:border hover:border-primary">
+            <button className="transition-all w-full py-2 text-lg text-white shadow-md bg-primary-gradient rounded-sm hover:bg-white">
               <Link to='/dashboard/profile/edit-profile'>EDIT PROFILE</Link>
             </button>
           </div>
@@ -32,7 +32,7 @@ function ProfileHeader({ userData }) {
           </div>
         </div>
 
-        <div className="bg-primary p-2 rounded-md">
+        <div className="bg-primary-gradient p-2 rounded-md">
           <ProfileStats 
           stat={`Email: ${userData.email}`}
           name={''}

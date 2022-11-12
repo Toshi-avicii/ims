@@ -1,7 +1,7 @@
 import AdminNav from "../../components/AdminNav";
 import ProfileEditForm from "../../components/Profile/ProfileEditForm";
 import Sidebar from "../../components/Sidebar";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function EditProfile() {
   const [sideBar, setSideBar] = useState("-left-64");
@@ -13,6 +13,10 @@ function EditProfile() {
   const closeSidebar = () => {
     setSideBar("-left-64");
   };
+
+  useEffect(() => {
+    document.title = 'Edit Profile | Edlyf - Inquiry Management System';
+  }, []);
 
   return (
     <div className="">

@@ -38,6 +38,7 @@ function ShowLeads() {
   }
 
   useEffect(() => {
+    document.title = 'All Leads | Edlyf - Inquiry Management System';
     if(!isFetching) {
       console.log(data);
         const leadData = data?.data;
