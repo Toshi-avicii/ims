@@ -17,7 +17,7 @@ function ProfileHeader({ userData }) {
             // userData.photo ? `http://localhost:5000/${userData.photo}` : 
               src={userImg ? userImg : profileImg}
               alt="profileImage"
-              className="block bg-white w-full p-1 shadow-md"
+              className="block bg-white w-full p-1 shadow-md rounded-md"
             />
             </div>
             <button className="border border-transparent transition-all w-full py-2 text-lg text-white shadow-md bg-primary rounded-sm hover:bg-white hover:text-primary hover:border hover:border-primary">
