@@ -18,6 +18,7 @@ function LeadTableRow({ item, index, day, year, month, hour, minute, dayNum }) {
   const [openEditModal, setOpenEditModal] = useState(false);
   const [deleteOneLead, response] = useSendToTrashMutation();
   const { data = {} } = useGetOneCounselorQuery(item.counselor);
+
    
   const updateHandler = (e) => {
     setOpenEditModal(true);
@@ -31,7 +32,7 @@ function LeadTableRow({ item, index, day, year, month, hour, minute, dayNum }) {
     deleteOneLead(item._id);
   }
 
-  const creationDate = new Date(item.createdAt);
+  const creationDate = item.movedToTrash === true ? new Date(item.date) : new Date(item.createdAt);
   let dayOfCreation = creationDate.toLocaleDateString(undefined, { day: "numeric" });
   dayOfCreation = Number(dayOfCreation) + 1;
   

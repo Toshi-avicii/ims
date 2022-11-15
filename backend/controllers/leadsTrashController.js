@@ -18,8 +18,10 @@ const moveToTrash = async(req, res) => {
                     name: deletedLead.reference.name,
                     phoneNo: deletedLead.reference.phoneNo
                 },
+                leadDate: deletedLead.date,
                 leadStatus: deletedLead.status,
-                leadCounselor: deletedLead.counselor
+                leadCounselor: deletedLead.counselor,
+                movedToTrash: true
             });
 
             const deleteFromLeads = await leadModel.deleteOne({ _id: leadId });
@@ -59,8 +61,10 @@ const recoverFromTrash = async(req, res) => {
                     name: deletedLead.leadReference.name,
                     phoneNo: deletedLead.leadReference.phoneNo
                 },
+                date: deletedLead.leadDate,
                 status: deletedLead.leadStatus,
-                counselor: deletedLead.leadCounselor
+                counselor: deletedLead.leadCounselor,
+                movedToTrash: deletedLead.movedToTrash
             });
 
             if(recoveredLead) {

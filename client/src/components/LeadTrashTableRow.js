@@ -16,6 +16,11 @@ function LeadTrashTableRow({ item, index, day, year, month, hour, minute, dayNum
   const [deleteOneLead, response] = useDeletePermanentlyMutation();
   const [recoverOneLead, responseFromMutation] = useRecoverFromTrashMutation();
 
+  const creationDate = item.movedToTrash === true ? new Date(item.leadDate) : new Date(item.createdAt);
+  let dayOfCreation = creationDate.toLocaleDateString(undefined, { day: "numeric" });
+  dayOfCreation = Number(dayOfCreation) + 1;
+  let restDate = creationDate.toString().slice(3, 21);
+
   const recoverHandler = (e) => {
     recoverOneLead(item._id);
   }
@@ -81,7 +86,7 @@ function LeadTrashTableRow({ item, index, day, year, month, hour, minute, dayNum
         responseFromMutation.isError,
         responseFromMutation.isLoading,
         responseFromMutation.status
-    ]);
+  ]);
 
   return (
     <>
@@ -99,10 +104,9 @@ function LeadTrashTableRow({ item, index, day, year, month, hour, minute, dayNum
         {item.leadPhone}
       </td>
       <td className="px-5 py-8 text-left whitespace-nowrap text-sm">
-        {days[day]}, {dayNum}-{month + 1 < 10 ? `0${month}` : month + 1}-{year}
-        <br />
-        {hour > 11 ? hour - 12 : hour}:{minute < 10 ? `0${minute}` : minute}
-        {hour > 11 ? " PM" : " AM"}
+        {days[dayOfCreation]}, 
+          <br />
+        {restDate}
       </td>
       <td className="px-5 py-8 text-left whitespace-nowrap text-sm uppercase">
         {item.leadCourse}

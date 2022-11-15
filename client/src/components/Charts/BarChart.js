@@ -4,11 +4,12 @@ import { Chart } from 'chart.js/auto';
 function BarChart({ chartData }) {
   const currentYear = new Date().getFullYear();
   return (
-    <div className='col-span-2 lg:col-span-1 mt-4 bg-slate-50 lg:p-6 rounded-md shadow-sm'>
+    <div className='col-span-2 lg:col-span-1 mt-4 bg-slate-50 lg:p-6 rounded-md shadow-sm min-h-[370px]'>
         <Bar 
             data={chartData}
             options={
                 {
+                    maintainAspectRatio: false,
                     plugins: {
                         title: {
                             display: true,

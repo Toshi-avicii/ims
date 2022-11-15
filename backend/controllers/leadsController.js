@@ -443,6 +443,7 @@ const addLead = async (req, res) => {
           phoneNo: refPhone
         },
         counselor: req.tokenInfo.id,
+        movedToTrash: false
       });
 
       if (createdLead) {
