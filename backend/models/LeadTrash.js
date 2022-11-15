@@ -42,7 +42,7 @@ const leadTrashSchema = mongoose.Schema({
             default: ""
         }
     },
-    date: {
+    leadDate: {
         type: Date,
         default: new Date()
     },
@@ -53,6 +53,10 @@ const leadTrashSchema = mongoose.Schema({
     leadCounselor: {
         type: String,
         required: true,
+    },
+    movedToTrash: {
+        type: Boolean,
+        required: true
     }
 }, {
     timestamps: true

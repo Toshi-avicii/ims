@@ -52,6 +52,11 @@ const leadSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: 'User'
+    },
+    movedToTrash: {
+        type: Boolean,
+        default: false,
+        required: true
     }
 }, {
     timestamps: true

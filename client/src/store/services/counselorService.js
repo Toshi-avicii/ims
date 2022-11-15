@@ -28,8 +28,8 @@ const counselorService = createApi({
       getOneCounselor: builder.query({
         query: (counselorId) => {
           return {
-            url: `counselor/${counselorId}`,
-          method: 'GET'
+            url: `counselors/${counselorId}`,
+            method: 'GET'
           }
         } 
       }),

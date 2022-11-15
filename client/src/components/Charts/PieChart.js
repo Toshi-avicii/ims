@@ -4,7 +4,7 @@ import { Chart } from 'chart.js/auto';
 function PieChart({ chartData }) {
   const currentYear = new Date().getFullYear();
   return (
-    <div className='col-span-2 lg:col-span-1 mt-4 bg-slate-50 lg:p-6 rounded-md shadow-sm h-[370px] flex justify-center items-center'>
+    <div className='col-span-2 lg:col-span-1 mt-4 bg-slate-50 lg:p-6 rounded-md shadow-sm min-h-[370px] flex justify-center items-center'>
         <Pie
             data={chartData}
             height="200px"
